@@ -270,6 +270,11 @@ function updateDropDownMenu() {
     })
     DDMenu.append($(`<div class="dropdown-divider"></div> `));
     DDMenu.append($(`
+        <div class="dropdown-item menuItemLayout" id="connexionCmd">
+            <i class="menuIcon fa fa-info-circle mx-2"></i> Connexion
+        </div>
+        `));
+    DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="aboutCmd">
             <i class="menuIcon fa fa-info-circle mx-2"></i> À propos...
         </div>
