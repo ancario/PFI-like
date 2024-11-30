@@ -268,10 +268,13 @@ async function compileCategories() {
 function updateDropDownMenu() {
     let DDMenu = $("#DDMenu");
     let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
-    //      <div class="avatar" style="background-image:url('${contact.Avatar}')"></div>
+   
     DDMenu.empty();
     DDMenu.append($(`
-        <div class="avatar" style="background-image:url('./images/no-avatar.png')"></div>
+        <div class="avatar-container">
+            <div class="avatar" style="background-image:url('./images/no-avatar.png');"></div>
+            <span>Anonyme</span>
+        </div>
     `));
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
