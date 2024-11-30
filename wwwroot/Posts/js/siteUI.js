@@ -293,6 +293,18 @@ function updateDropDownMenu() {
                 <i class="menuIcon fa fa-sign-in mx-2"></i> Inscription
             </div>
             `));
+
+DDMenu.append($(`
+    <div class="dropdown-item menuItemLayout" id="profilCmd">
+        <i class="menuIcon fa fa-user-edit mx-2"></i> Modification de profil
+    </div>
+`));
+
+DDMenu.append($(`
+    <div class="dropdown-item menuItemLayout" id="deconnexionCmd">
+        <i class="menuIcon fa fa-sign-out-alt mx-2"></i> Déconnexion
+    </div>
+`));
             DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="allCatCmd">
