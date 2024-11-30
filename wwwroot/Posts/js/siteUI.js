@@ -173,6 +173,7 @@ function showInscription(){
     $("#hiddenIcon2").show();
     $('#abort').show();
     $("#viewTitle").text("Inscription");
+    renderInscription();
 }
 
 //////////////////////////// Posts rendering /////////////////////////////////////////////////////////////
@@ -564,7 +565,7 @@ function getFormData($form) {
     });
     return jsonObject;
 }
-function renderConnection(post = null) {
+function renderInscription(post = null) {
     $("#form").show();
     $("#form").empty();
     $("#form").append(`
