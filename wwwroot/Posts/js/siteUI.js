@@ -167,6 +167,13 @@ function showConnexion(){
     $('#abort').show();
     $("#viewTitle").text("Connexion");
 }
+function showInscription(){
+    hidePosts();
+    $("#hiddenIcon").show();
+    $("#hiddenIcon2").show();
+    $('#abort').show();
+    $("#viewTitle").text("Inscription");
+}
 
 //////////////////////////// Posts rendering /////////////////////////////////////////////////////////////
 
@@ -278,9 +285,14 @@ function updateDropDownMenu() {
     DDMenu.append($(`<div class="dropdown-divider"></div> `));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="connexionCmd">
-            <i class="menuIcon fa fa-info-circle mx-2"></i> Connexion
+            <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion
         </div>
         `));
+        DDMenu.append($(`
+            <div class="dropdown-item menuItemLayout" id="inscriptionCmd">
+                <i class="menuIcon fa fa-sign-in mx-2"></i> Inscription
+            </div>
+            `));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="aboutCmd">
             <i class="menuIcon fa fa-info-circle mx-2"></i> À propos...
@@ -289,6 +301,9 @@ function updateDropDownMenu() {
         ///showConnexion
         $('#connexionCmd').on("click", function () {
             showConnexion();
+        });
+        $('#inscriptionCmd').on("click", function () {
+            showInscription();
         });
     $('#aboutCmd').on("click", function () {
         showAbout();
