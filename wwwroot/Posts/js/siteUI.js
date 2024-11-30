@@ -533,3 +533,105 @@ function getFormData($form) {
     });
     return jsonObject;
 }
+function renderConnection(post = null) {
+    $("#form").show();
+    $("#form").empty();
+    $("#form").append(`
+        <form class="form" id="postForm">
+            <input type="hidden" name="Date" value="${post.Date}"/>
+            <input type="hidden" name="Id" value="${post.Id}"/>
+             
+            <div>
+            <label for="Email" class="form-label">Email </label>
+            <input 
+                class="form-control"
+                name="Email" 
+                id="Email" 
+                placeholder="couriel"
+                required
+                RequireMessage="Veuillez entrer un couriel"
+                InvalidMessage="Le couriel comporte un caractère illégal"
+                value="${post.Email}"
+            />
+            <input 
+                class="form-control"
+                name="MatchedInput" 
+                id="couriel" 
+                placeholder="couriel"
+                required
+                RequireMessage="Veuillez entrer un couriel"
+                InvalidMessage="Le couriel comporte un caractère illégal"
+                value="${post.couriel}"
+            />
+            </div>
+
+              <div>
+            <label for="Password" class="form-label">mot de passe </label>
+            <input 
+                class="form-control"
+                name="password" 
+                id="password" 
+                placeholder="mot de pass"
+                required
+                RequireMessage="Veuillez entrer un mot de pass"
+                InvalidMessage="Le mot de pass comporte un caractère illégal"
+                value="${post.password}"
+            />
+            <input 
+                class="form-control"
+                name="MatchedInput" 
+                id="password" 
+                placeholder="mot de pass"
+                required
+                RequireMessage="Veuillez entrer un mot de pass"
+                InvalidMessage="Le mot de pass comporte un caractère illégal"
+                value="${post.password}"
+            />
+            </div>
+
+           
+            <label class="form-label">Avatar </label>
+            <div class='imageUploaderContainer'>
+                <div class='imageUploader' 
+                     newImage='${create}' 
+                     controlId='Avatar' 
+                     imageSrc='${post.Avatar}' 
+                     waitingImage="Loading_icon.gif">
+                </div>
+            </div>
+            <div id="keepDateControl">
+                <input type="checkbox" name="keepDate" id="keepDate" class="checkbox" checked>
+                <label for="keepDate"> Conserver la date de création </label>
+            </div>
+            <input type="submit" value="Enregistrer" id="savePost" class="btn btn-primary displayNone">
+        </form>
+    `);
+    if (create) $("#keepDateControl").hide();
+
+    initImageUploaders();
+    initFormValidation(); // important do to after all html injection!
+
+    $("#commit").click(function () {
+        $("#commit").off();
+        return $('#savePost').trigger("click");
+    });
+    $('#postForm').on("submit", async function (event) {
+        event.preventDefault();
+        let post = getFormData($("#postForm"));
+        if (post.Category != selectedCategory)
+            selectedCategory = "";
+        if (create || !('keepDate' in post))
+            post.Date = Local_to_UTC(Date.now());
+        delete post.keepDate;
+        post = await Posts_API.Save(post, create);
+        if (!Posts_API.error) {
+            await showPosts();
+            postsPanel.scrollToElem(post.Id);
+        }
+        else
+            showError("Une erreur est survenue! ", Posts_API.currentHttpError);
+    });
+    $('#cancel').on("click", async function () {
+        await showPosts();
+    });
+}
