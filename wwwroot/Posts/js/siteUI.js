@@ -268,22 +268,21 @@ async function compileCategories() {
 function updateDropDownMenu() {
     let DDMenu = $("#DDMenu");
     let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
+   
     DDMenu.empty();
     DDMenu.append($(`
-        <div class="dropdown-item menuItemLayout" id="allCatCmd">
-            <i class="menuIcon fa ${selectClass} mx-2"></i> Toutes les catégories
+        <div class="avatar-container">
+            <div class="avatar" style="background-image:url('./images/no-avatar.png');"></div>
+            <span>Anonyme</span>
+        </div>
+    `));
+    DDMenu.append($(`<div class="dropdown-divider"></div>`));
+    DDMenu.append($(`
+        <div class="dropdown-item menuItemLayout" id="connexionCmd">
+           <i class="menuIcon fa fa-users-cog mx-2"></i> Gestion des usagers
         </div>
         `));
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
-    categories.forEach(category => {
-        selectClass = selectedCategory === category ? "fa-check" : "fa-fw";
-        DDMenu.append($(`
-            <div class="dropdown-item menuItemLayout category" id="allCatCmd">
-                <i class="menuIcon fa ${selectClass} mx-2"></i> ${category}
-            </div>
-        `));
-    })
-    DDMenu.append($(`<div class="dropdown-divider"></div> `));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="connexionCmd">
             <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion
@@ -294,6 +293,24 @@ function updateDropDownMenu() {
                 <i class="menuIcon fa fa-sign-in mx-2"></i> Inscription
             </div>
             `));
+            DDMenu.append($(`<div class="dropdown-divider"></div>`));
+    DDMenu.append($(`
+        <div class="dropdown-item menuItemLayout" id="allCatCmd">
+            <i class="menuIcon fa ${selectClass} mx-2"></i> Toutes les catégories
+        </div>
+        `));
+       
+    DDMenu.append($(`<div class="dropdown-divider"></div>`));
+    categories.forEach(category => {
+        selectClass = selectedCategory === category ? "fa-check" : "fa-fw";
+        DDMenu.append($(`
+            <div class="dropdown-item menuItemLayout category" id="allCatCmd">
+                <i class="menuIcon fa ${selectClass} mx-2"></i> ${category}
+            </div>
+        `));
+    })
+    DDMenu.append($(`<div class="dropdown-divider"></div> `));
+   
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="aboutCmd">
             <i class="menuIcon fa fa-info-circle mx-2"></i> À propos...

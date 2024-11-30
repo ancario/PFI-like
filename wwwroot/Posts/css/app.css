@@ -43,7 +43,22 @@ body {
     overflow-y: scroll;
     overflow: hidden;
 }
+.avatar-container {
+    display: flex;            
+    align-items: center;     
+}
 
+.avatar {
+    width: 40px;               
+    height: 40px;
+    background-size: cover;    
+    background-position: center; 
+    border-radius: 50%;        
+}
+
+span {
+    margin-left: 10px;         
+}
 #header {
     border: 1px solid var(--borderColor);
     border-radius: var(--borderRadius);
