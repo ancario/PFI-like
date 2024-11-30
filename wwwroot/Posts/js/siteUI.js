@@ -501,6 +501,14 @@ function newPost() {
     Post.Category = "";
     return Post;
 }
+function newUser() {
+    let user = {};
+    user.name = "";
+    user.Email = "";
+    user.password = "";
+    user.Avatar = "news-logo-upload.png";
+    return user;
+}
 function renderPostForm(post = null) {
     let create = post == null;
     if (create) post = newPost();
@@ -594,14 +602,13 @@ function getFormData($form) {
     });
     return jsonObject;
 }
-function renderInscription(post = null) {
+function renderInscription(user = null) {
+    let create = user == null;
+    if (create) user = newUser();
     $("#form").show();
     $("#form").empty();
     $("#form").append(`
         <form class="form" id="postForm">
-            <input type="hidden" name="Date" value="${post.Date}"/>
-            <input type="hidden" name="Id" value="${post.Id}"/>
-             
             <div>
             <label for="Email" class="form-label">Email </label>
             <input 
@@ -612,7 +619,7 @@ function renderInscription(post = null) {
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${post.Email}"
+                value="${user.email}"
             />
             <input 
                 class="form-control"
@@ -622,7 +629,7 @@ function renderInscription(post = null) {
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${post.couriel}"
+                value="${user.email}"
             />
             </div>
 
@@ -636,7 +643,7 @@ function renderInscription(post = null) {
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${post.password}"
+                value="${user.password}"
             />
             <input 
                 class="form-control"
@@ -646,7 +653,7 @@ function renderInscription(post = null) {
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${post.password}"
+                value="${user.password}"
             />
             </div>
 
@@ -656,41 +663,19 @@ function renderInscription(post = null) {
                 <div class='imageUploader' 
                      newImage='${create}' 
                      controlId='Avatar' 
-                     imageSrc='${post.Avatar}' 
+                     imageSrc='${user.Avatar}' 
                      waitingImage="Loading_icon.gif">
                 </div>
             </div>
-            <div id="keepDateControl">
-                <input type="checkbox" name="keepDate" id="keepDate" class="checkbox" checked>
-                <label for="keepDate"> Conserver la date de création </label>
-            </div>
-            <input type="submit" value="Enregistrer" id="savePost" class="btn btn-primary displayNone">
+            <input type="submit" value="Enregistrer" id="saveUser" class="btn btn-primary displayNone">l</imput>
         </form>
     `);
-    if (create) $("#keepDateControl").hide();
-
     initImageUploaders();
     initFormValidation(); // important do to after all html injection!
 
     $("#commit").click(function () {
         $("#commit").off();
-        return $('#savePost').trigger("click");
-    });
-    $('#postForm').on("submit", async function (event) {
-        event.preventDefault();
-        let post = getFormData($("#postForm"));
-        if (post.Category != selectedCategory)
-            selectedCategory = "";
-        if (create || !('keepDate' in post))
-            post.Date = Local_to_UTC(Date.now());
-        delete post.keepDate;
-        post = await Posts_API.Save(post, create);
-        if (!Posts_API.error) {
-            await showPosts();
-            postsPanel.scrollToElem(post.Id);
-        }
-        else
-            showError("Une erreur est survenue! ", Posts_API.currentHttpError);
+        return $('#saveUser').trigger("click");
     });
     $('#cancel').on("click", async function () {
         await showPosts();
