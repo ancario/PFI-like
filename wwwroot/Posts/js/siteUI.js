@@ -160,6 +160,13 @@ function showAbout() {
     $("#viewTitle").text("À propos...");
     $("#aboutContainer").show();
 }
+function showConnexion(){
+    hidePosts();
+    $("#hiddenIcon").show();
+    $("#hiddenIcon2").show();
+    $('#abort').show();
+    $("#viewTitle").text("Connexion");
+}
 
 //////////////////////////// Posts rendering /////////////////////////////////////////////////////////////
 
@@ -270,10 +277,19 @@ function updateDropDownMenu() {
     })
     DDMenu.append($(`<div class="dropdown-divider"></div> `));
     DDMenu.append($(`
+        <div class="dropdown-item menuItemLayout" id="connexionCmd">
+            <i class="menuIcon fa fa-info-circle mx-2"></i> Connexion
+        </div>
+        `));
+    DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="aboutCmd">
             <i class="menuIcon fa fa-info-circle mx-2"></i> À propos...
         </div>
         `));
+        ///showConnexion
+        $('#connexionCmd').on("click", function () {
+            showConnexion();
+        });
     $('#aboutCmd').on("click", function () {
         showAbout();
     });
