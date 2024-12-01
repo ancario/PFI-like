@@ -702,7 +702,7 @@ function renderInscription(user = null) {
                      waitingImage="Loading_icon.gif">
                 </div>
             </div>
-            <input type="submit" value="Enregistrer" id="saveUser" class="btn btn-primary displayNone">l</imput>
+            <input type="submit" value="Enregistrer" id="saveUser">
         </form>
     `);
     initImageUploaders();
