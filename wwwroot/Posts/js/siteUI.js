@@ -538,7 +538,7 @@ function newPost() {
 }
 function newUser() {
     let user = {};
-    Post.Id = 0;
+    user.Id = 0;
     user.name = "";
     user.Email = "";
     user.password = "";
