@@ -538,6 +538,7 @@ function newPost() {
 }
 function newUser() {
     let user = {};
+    Post.Id = 0;
     user.name = "";
     user.Email = "";
     user.password = "";
@@ -643,7 +644,8 @@ function renderInscription(user = null) {
     $("#form").show();
     $("#form").empty();
     $("#form").append(`
-        <form class="form" id="postForm">
+        <form class="form" id="userForm">
+        <input type="hidden" name="Id" value="${post.Id}"/>
             <div>
             <label for="Email" class="form-label">Email </label>
             <input 
@@ -714,5 +716,15 @@ function renderInscription(user = null) {
     });
     $('#cancel').on("click", async function () {
         await showPosts();
+    });
+    $('#userForm').on("submit", async function (event) {
+        event.preventDefault();
+        let user = getFormData($("#userForm"));
+        user = await User_API.Save(user, create);
+        if (!User_API.error) {
+            await showPosts();
+        }
+        else
+            showError("Une erreur est survenue! ", Posts_API.currentHttpError);
     });
 }
