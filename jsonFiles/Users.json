@@ -81,14 +81,17 @@
         "Id": "f11ee960-aa82-11ef-b942-e7f097a2ee7a"
     },
     {
-        "Id": "05cbbe40-affd-11ef-93e8-4f51848cf564",
-        "Created": 1733068659,
-        "Authorizations": "[object Object]",
+        "Id": "e46f9390-b004-11ef-bc19-eb43a1529c13",
+        "Created": 1733072037,
         "VerifyCode": "unverified",
-        "Name": "test",
-        "Email": "a@a.com",
-        "MatchedInput": "a@a.com",
-        "Password": "as",
-        "Avatar": "05cbbe41-affd-11ef-93e8-4f51848cf564.png"
+        "Name": "a",
+        "Email": "a@gmail.com",
+        "MatchedInput": "a@gmail.com",
+        "Password": "a",
+        "Avatar": "e46f9391-b004-11ef-bc19-eb43a1529c13.png",
+        "Authorizations": {
+            "readAccess": 1,
+            "writeAccess": 1
+        }
     }
 ]

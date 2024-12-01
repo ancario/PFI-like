@@ -544,9 +544,10 @@ function newUser() {
     user.Password = "";
     user.Avatar = "news-logo-upload.png";
     user.Created = Math.floor(Date.now() / 1000); 
+   // user.Authorizations = JSON.stringify({ readAccess: 1, writeAccess: 1 }); 
     user.Authorizations = {
         readAccess: 1,
-        writeAccess: 1 
+        writeAccess: 1
     };
     user.VerifyCode = "unverified"; // Vérification par défaut
     return user;
@@ -653,7 +654,6 @@ function renderInscription(user = null) {
         <form class="form" id="userForm">
         <input type="hidden" name="Id" value="${user.Id}"/>
         <input type="hidden" name="Created" value="${user.Created}"/>
-        <input type="hidden" name="Authorizations" value="${user.Authorizations}"/>
         <input type="hidden" name="VerifyCode" value="${user.VerifyCode}"/>
         <label for="Name" class="form-label">nom </label>
             <input 
@@ -730,6 +730,13 @@ function renderInscription(user = null) {
     $('#userForm').on("submit", async function (event) {
         event.preventDefault();
         let user = getFormData($("#userForm"));
+
+        user.Authorizations = {
+            readAccess: 1,  
+            writeAccess: 1  
+        };
+    
+
         user = await Users_API.Save(user, create);
         if (!Users_API.error) {
             await showPosts();
