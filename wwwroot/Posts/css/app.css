@@ -45,7 +45,8 @@ body {
 }
 .avatar-container {
     display: flex;            
-    align-items: center;     
+    align-items: center;   
+    margin-left: 20px;  
 }
 
 .avatar {

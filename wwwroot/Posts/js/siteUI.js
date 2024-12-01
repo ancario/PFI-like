@@ -160,6 +160,14 @@ function showAbout() {
     $("#viewTitle").text("À propos...");
     $("#aboutContainer").show();
 }
+
+function showDeconnexion(){
+    hidePosts();
+    $("#hiddenIcon").show();
+    $("#hiddenIcon2").show();
+    $('#abort').show();
+    $("#viewTitle").text("Déconnexion");
+}
 function showConnexion(){
     hidePosts();
     $("#hiddenIcon").show();
@@ -167,6 +175,21 @@ function showConnexion(){
     $('#abort').show();
     $("#viewTitle").text("Connexion");
 }
+function showGestionUsager(){
+    hidePosts();
+    $("#hiddenIcon").show();
+    $("#hiddenIcon2").show();
+    $('#abort').show();
+    $("#viewTitle").text("GestionUsager");
+}
+function showpModificationProfil(){
+    hidePosts();
+    $("#hiddenIcon").show();
+    $("#hiddenIcon2").show();
+    $('#abort').show();
+    $("#viewTitle").text("Modification du profil");
+}
+
 function showInscription(){
     hidePosts();
     $("#hiddenIcon").show();
@@ -278,7 +301,7 @@ function updateDropDownMenu() {
     `));
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
-        <div class="dropdown-item menuItemLayout" id="connexionCmd">
+        <div class="dropdown-item menuItemLayout" id="gestionUsagerCmd">
            <i class="menuIcon fa fa-users-cog mx-2"></i> Gestion des usagers
         </div>
         `));
@@ -293,6 +316,18 @@ function updateDropDownMenu() {
                 <i class="menuIcon fa fa-sign-in mx-2"></i> Inscription
             </div>
             `));
+
+DDMenu.append($(`
+    <div class="dropdown-item menuItemLayout" id="profilCmd">
+        <i class="menuIcon fa fa-user-edit mx-2"></i> Modification de profil
+    </div>
+`));
+
+DDMenu.append($(`
+    <div class="dropdown-item menuItemLayout" id="deconnexionCmd">
+        <i class="menuIcon fa fa-sign-out-alt mx-2"></i> Déconnexion
+    </div>
+`));
             DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="allCatCmd">
@@ -317,6 +352,18 @@ function updateDropDownMenu() {
         </div>
         `));
         ///showConnexion
+        //gestionUsagerCmd
+        //profilCmd
+        //deconnexionCmd
+        $('#deconnexionCmd').on("click", function () {
+            showDeconnexion();
+        });
+        $('#gestionUsagerCmd').on("click", function () {
+            showGestionUsager();
+        });
+        $('#profilCmd').on("click", function () {
+            showpModificationProfil();
+        });
         $('#connexionCmd').on("click", function () {
             showConnexion();
         });
