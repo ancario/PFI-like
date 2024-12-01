@@ -645,7 +645,7 @@ function renderInscription(user = null) {
     $("#form").empty();
     $("#form").append(`
         <form class="form" id="userForm">
-        <input type="hidden" name="Id" value="${post.Id}"/>
+        <input type="hidden" name="Id" value="${user.Id}"/>
             <div>
             <label for="Email" class="form-label">Email </label>
             <input 
