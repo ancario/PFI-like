@@ -646,6 +646,18 @@ function renderInscription(user = null) {
     $("#form").append(`
         <form class="form" id="userForm">
         <input type="hidden" name="Id" value="${user.Id}"/>
+        <input type="hidden" name="Date" value="${user.Date}"/>
+        <label for="name" class="form-label">nom </label>
+            <input 
+                class="form-control"
+                name="name" 
+                id="name" 
+                placeholder="nom"
+                required
+                RequireMessage="Veuillez entrer un couriel"
+                InvalidMessage="Le couriel comporte un caractère illégal"
+                value="${user.Name}"
+            />
             <div>
             <label for="Email" class="form-label">Email </label>
             <input 
@@ -661,7 +673,7 @@ function renderInscription(user = null) {
             <input 
                 class="form-control"
                 name="MatchedInput" 
-                id="couriel" 
+                id="Email" 
                 placeholder="couriel"
                 required
                 RequireMessage="Veuillez entrer un couriel"
@@ -675,16 +687,6 @@ function renderInscription(user = null) {
             <input 
                 class="form-control"
                 name="password" 
-                id="password" 
-                placeholder="mot de pass"
-                required
-                RequireMessage="Veuillez entrer un mot de pass"
-                InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${user.password}"
-            />
-            <input 
-                class="form-control"
-                name="MatchedInput" 
                 id="password" 
                 placeholder="mot de pass"
                 required
