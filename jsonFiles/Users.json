@@ -79,5 +79,16 @@
         },
         "VerifyCode": "verified",
         "Id": "f11ee960-aa82-11ef-b942-e7f097a2ee7a"
+    },
+    {
+        "Id": "05cbbe40-affd-11ef-93e8-4f51848cf564",
+        "Created": 1733068659,
+        "Authorizations": "[object Object]",
+        "VerifyCode": "unverified",
+        "Name": "test",
+        "Email": "a@a.com",
+        "MatchedInput": "a@a.com",
+        "Password": "as",
+        "Avatar": "05cbbe41-affd-11ef-93e8-4f51848cf564.png"
     }
 ]

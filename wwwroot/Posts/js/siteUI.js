@@ -539,9 +539,9 @@ function newPost() {
 function newUser() {
     let user = {};
     user.Id = 0;
-    user.name = "";
+    user.Name = "";
     user.Email = "";
-    user.password = "";
+    user.Password = "";
     user.Avatar = "news-logo-upload.png";
     user.Created = Math.floor(Date.now() / 1000); 
     user.Authorizations = {
@@ -652,17 +652,19 @@ function renderInscription(user = null) {
     $("#form").append(`
         <form class="form" id="userForm">
         <input type="hidden" name="Id" value="${user.Id}"/>
-        <input type="hidden" name="Date" value="${user.Date}"/>
-        <label for="name" class="form-label">nom </label>
+        <input type="hidden" name="Created" value="${user.Created}"/>
+        <input type="hidden" name="Authorizations" value="${user.Authorizations}"/>
+        <input type="hidden" name="VerifyCode" value="${user.VerifyCode}"/>
+        <label for="Name" class="form-label">nom </label>
             <input 
                 class="form-control"
-                name="name" 
-                id="name" 
+                name="Name" 
+                id="Name" 
                 placeholder="nom"
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${user.name}"
+                value="${user.Name}"
             />
             <div>
             <label for="Email" class="form-label">Email </label>
@@ -692,13 +694,13 @@ function renderInscription(user = null) {
             <label for="Password" class="form-label">mot de passe </label>
             <input 
                 class="form-control"
-                name="password" 
-                id="password" 
+                name="Password" 
+                id="Password" 
                 placeholder="mot de pass"
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${user.password}"
+                value="${user.Password}"
             />
             </div>
 
