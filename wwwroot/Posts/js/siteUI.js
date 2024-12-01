@@ -543,6 +543,12 @@ function newUser() {
     user.Email = "";
     user.password = "";
     user.Avatar = "news-logo-upload.png";
+    user.Created = Math.floor(Date.now() / 1000); 
+    user.Authorizations = {
+        readAccess: 1,
+        writeAccess: 1 
+    };
+    user.VerifyCode = "unverified"; // Vérification par défaut
     return user;
 }
 function renderPostForm(post = null) {
