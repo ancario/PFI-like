@@ -725,6 +725,6 @@ function renderInscription(user = null) {
             await showPosts();
         }
         else
-            showError("Une erreur est survenue! ", Posts_API.currentHttpError);
+            showError("Une erreur est survenue! ",Users_API.currentHttpError);
     });
 }
