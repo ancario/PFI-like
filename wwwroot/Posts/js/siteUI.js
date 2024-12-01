@@ -662,8 +662,8 @@ function renderInscription(user = null) {
                 id="Name" 
                 placeholder="nom"
                 required
-                RequireMessage="Veuillez entrer un couriel"
-                InvalidMessage="Le couriel comporte un caractère illégal"
+                RequireMessage="Veuillez entrer un nom"
+                InvalidMessage="Le nom comporte un caractère illégal"
                 value="${user.Name}"
             />
             <div>
@@ -681,12 +681,12 @@ function renderInscription(user = null) {
             <input 
                 class="form-control"
                 name="MatchedInput" 
-                id="Email" 
-                placeholder="couriel"
+                id="ConfirmEmail" 
+                placeholder="verification"
                 required
-                RequireMessage="Veuillez entrer un couriel"
-                InvalidMessage="Le couriel comporte un caractère illégal"
                 value="${user.Email}"
+                RequireMessage="Veuillez entrer une verification"
+                InvalidMessage="La verification comporte un caractère illégal"
             />
             </div>
 
@@ -697,6 +697,16 @@ function renderInscription(user = null) {
                 name="Password" 
                 id="Password" 
                 placeholder="mot de pass"
+                required
+                RequireMessage="Veuillez entrer un mot de pass"
+                InvalidMessage="Le mot de pass comporte un caractère illégal"
+                value="${user.Password}"
+            />
+            <input 
+                class="form-control"
+                name="Password" 
+                id="ConfirmPassword" 
+                placeholder="verification"
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
@@ -719,7 +729,10 @@ function renderInscription(user = null) {
     `);
     initImageUploaders();
     initFormValidation(); // important do to after all html injection!
-
+    const email = document.getElementById('Email');
+    const confirmEmail = document.getElementById('ConfirmEmail');
+    const pass = document.getElementById('Password');
+    const confirmpass = document.getElementById('ConfirmPassword');
     $("#commit").click(function () {
         $("#commit").off();
         return $('#saveUser').trigger("click");
@@ -729,6 +742,14 @@ function renderInscription(user = null) {
     });
     $('#userForm').on("submit", async function (event) {
         event.preventDefault();
+        if (email.value !== confirmEmail.value) {
+            event.preventDefault();
+            showError("confirmation couriel invalid")
+        } 
+        if (pass.value !== confirmpass.value) {
+            event.preventDefault();
+            showError("confirmation mot de pass invalid")
+        } 
         let user = getFormData($("#userForm"));
         user = await Users_API.Save(user, create);
         if (!Users_API.error) {
@@ -737,4 +758,8 @@ function renderInscription(user = null) {
         else
             showError("Une erreur est survenue! ",Users_API.currentHttpError);
     });
+   
+
+
+   
 }
