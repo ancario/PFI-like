@@ -662,7 +662,7 @@ function renderInscription(user = null) {
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${user.Name}"
+                value="${user.name}"
             />
             <div>
             <label for="Email" class="form-label">Email </label>
@@ -674,7 +674,7 @@ function renderInscription(user = null) {
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${user.email}"
+                value="${user.Email}"
             />
             <input 
                 class="form-control"
@@ -684,7 +684,7 @@ function renderInscription(user = null) {
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
-                value="${user.email}"
+                value="${user.Email}"
             />
             </div>
 
