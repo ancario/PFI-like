@@ -721,7 +721,7 @@ function renderInscription(user = null) {
         event.preventDefault();
         let user = getFormData($("#userForm"));
         user = await Users_API.Save(user, create);
-        if (!User_API.error) {
+        if (!Users_API.error) {
             await showPosts();
         }
         else
