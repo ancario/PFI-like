@@ -770,3 +770,45 @@ function renderInscription(user = null) {
 
    
 }
+function showConnexion(user=null){
+    $("#form").show();
+    $("#form").empty();
+    $("#form").append(`
+       
+
+        <div class="login-container">
+            <h1>Connexion</h1>
+            <form action="/login" method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                 <input 
+                class="form-control"
+                name="Email" 
+                id="Email" 
+                placeholder="Email"
+                required
+                value="${user.Email}"
+                RequireMessage="Veuillez entrer votre Email"
+                InvalidMessage="Le Email comporte un caractère illégal"
+            />
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input 
+                class="form-control"
+                name="Password" 
+                id="Password" 
+                placeholder="mot de pass"
+                required
+                RequireMessage="Veuillez entrer un mot de pass"
+                InvalidMessage="Le mot de pass comporte un caractère illégal"
+                value="${user.Password}"
+            />
+            </div>
+            <button type="submit" class="btn">Se connecter</button>
+            </form>
+        </div>
+
+    `)
+    initFormValidation();
+}
