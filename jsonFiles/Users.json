@@ -79,5 +79,19 @@
         },
         "VerifyCode": "verified",
         "Id": "f11ee960-aa82-11ef-b942-e7f097a2ee7a"
+    },
+    {
+        "Id": "14420bb0-b1be-11ef-ba40-d1a00515a528",
+        "Created": 1733261528,
+        "VerifyCode": "unverified",
+        "Name": "a",
+        "Email": "a@gmail.com",
+        "MatchedInput": "a@gmail.com",
+        "Password": "a",
+        "Avatar": "144232c0-b1be-11ef-ba40-d1a00515a528.png",
+        "Authorizations": {
+            "readAccess": 1,
+            "writeAccess": 1
+        }
     }
 ]
