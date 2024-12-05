@@ -850,4 +850,11 @@ function RenderConnexions(){
 
     `)
     initFormValidation();
+    $('#userForm').on("submit", async function (event) {
+        if(true){
+            sessionStorage.setItem('userId', idUtilisateur);
+        }
+        
+    })
+   
 }
