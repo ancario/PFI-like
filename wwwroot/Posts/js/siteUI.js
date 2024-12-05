@@ -793,7 +793,7 @@ function RenderConnexions(){
     $("#form").empty();
     $("#form").append(`
        
-
+        <form class="form" id="userForm">
         <div class="login-container">
             <h1>Connexion</h1>
             <form action="/login" method="post">
@@ -822,8 +822,8 @@ function RenderConnexions(){
             />
             </div>
             <button type="submit" class="btn">Se connecter</button>
-            </form>
         </div>
+        </form>
 
     `)
     initFormValidation();
