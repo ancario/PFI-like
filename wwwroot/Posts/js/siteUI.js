@@ -175,7 +175,7 @@ function showConnexion(){
     $("#hiddenIcon2").show();
     $('#abort').show();
     $("#viewTitle").text("Connexion");
-    showConnexions();
+    RenderConnexions();
 }
 function showGestionUsager(){
     hidePosts();
@@ -788,7 +788,7 @@ function renderInscription(user = null) {
 
    
 }
-function showConnexions(){
+function RenderConnexions(){
     $("#form").show();
     $("#form").empty();
     $("#form").append(`
