@@ -851,9 +851,11 @@ function RenderConnexions(){
     `)
     initFormValidation();
     $('#userForm').on("submit", async function (event) {
-        Accounts_API.login()
-        
-        
+       val = {
+            Email: user.Email,
+            Password: user.Password
+        };
+        Accounts_API.login(val)        
     })
    
 }
