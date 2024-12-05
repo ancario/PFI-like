@@ -26,6 +26,7 @@ export default class AccountsController extends Controller {
     }
     // POST: /token body payload[{"Email": "...", "Password": "..."}]
     login(loginInfo) {
+        console.log("AAAAAAA")
         if (loginInfo) {
             if (this.repository != null) {
                 let user = this.repository.findByField("Email", loginInfo.Email);

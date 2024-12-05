@@ -78,4 +78,22 @@ class Accounts_API {
             });
         });
     }
+    static async Login(loginInfo) {
+        Accounts_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url: this.API_URL() + "/login",
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(loginInfo),
+                success: (data) => { 
+                    resolve(data); // Renvoie la réponse du serveur (incluant le token si présent)
+                },
+                error: (xhr) => {
+                    Accounts_API.setHttpErrorState(xhr); 
+                    resolve(null);
+                }
+            });
+        });
+    }
 }
