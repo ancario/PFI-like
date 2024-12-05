@@ -307,16 +307,35 @@ async function compileCategories() {
     }
 }
 function updateDropDownMenu() {
+    const idUtilisateur = sessionStorage.getItem('userId');
+    if (idUtilisateur) {
+        console.log("Utilisateur connecté. ID:", idUtilisateur);
+     
+    } else {
+        console.log("Aucun utilisateur connecté."); 
+    }
     let DDMenu = $("#DDMenu");
     let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
    
     DDMenu.empty();
-    DDMenu.append($(`
-        <div class="avatar-container">
-            <div class="avatar" style="background-image:url('./images/no-avatar.png');"></div>
-            <span>Anonyme</span>
-        </div>
-    `));
+     // Avatar et nom d'utilisateur
+     if (idUtilisateur) {
+        console.log("Utilisateur connecté. ID:", idUtilisateur);
+        DDMenu.append($(`
+            <div class="avatar-container">
+                <div class="avatar" style="background-image:url('./images/user-avatar.png');"></div>
+                <span>Utilisateur ${idUtilisateur}</span>
+            </div>
+        `));
+    } else {
+        console.log("Aucun utilisateur connecté.");
+        DDMenu.append($(`
+            <div class="avatar-container">
+                <div class="avatar" style="background-image:url('./images/no-avatar.png');"></div>
+                <span>Anonyme</span>
+            </div>
+        `));
+    }
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="gestionUsagerCmd">
@@ -324,28 +343,32 @@ function updateDropDownMenu() {
         </div>
         `));
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
-    DDMenu.append($(`
-        <div class="dropdown-item menuItemLayout" id="connexionCmd">
-            <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion
-        </div>
+    // Options selon l'état de connexion
+    if (!idUtilisateur) {
+        // Utilisateur non connecté
+        DDMenu.append($(`
+            <div class="dropdown-item menuItemLayout" id="connexionCmd">
+                <i class="menuIcon fa fa-sign-in mx-2"></i> Connexion
+            </div>
         `));
         DDMenu.append($(`
             <div class="dropdown-item menuItemLayout" id="inscriptionCmd">
-                <i class="menuIcon fa fa-sign-in mx-2"></i> Inscription
+                <i class="menuIcon fa fa-user-plus mx-2"></i> Inscription
             </div>
-            `));
-
-DDMenu.append($(`
-    <div class="dropdown-item menuItemLayout" id="profilCmd">
-        <i class="menuIcon fa fa-user-edit mx-2"></i> Modification de profil
-    </div>
-`));
-
-DDMenu.append($(`
-    <div class="dropdown-item menuItemLayout" id="deconnexionCmd">
-        <i class="menuIcon fa fa-sign-out-alt mx-2"></i> Déconnexion
-    </div>
-`));
+        `));
+    } else {
+        // Utilisateur connecté
+        DDMenu.append($(`
+            <div class="dropdown-item menuItemLayout" id="profilCmd">
+                <i class="menuIcon fa fa-user-edit mx-2"></i> Modification de profil
+            </div>
+        `));
+        DDMenu.append($(`
+            <div class="dropdown-item menuItemLayout" id="deconnexionCmd">
+                <i class="menuIcon fa fa-sign-out-alt mx-2"></i> Déconnexion
+            </div>
+        `));
+    }
             DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append($(`
         <div class="dropdown-item menuItemLayout" id="allCatCmd">
