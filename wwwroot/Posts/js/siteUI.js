@@ -851,10 +851,8 @@ function RenderConnexions(){
     `)
     initFormValidation();
     $('#userForm').on("submit", async function (event) {
+        Accounts_API.login()
         
-        if(true){
-            sessionStorage.setItem('userId', idUtilisateur);
-        }
         
     })
    
