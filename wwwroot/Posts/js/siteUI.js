@@ -787,7 +787,7 @@ function renderInscription(user = null) {
 
    
 }
-function showConnexion(user=null){
+function showConnexion(){
     $("#form").show();
     $("#form").empty();
     $("#form").append(`
@@ -804,7 +804,6 @@ function showConnexion(user=null){
                 id="Email" 
                 placeholder="Email"
                 required
-                value="${user.Email}"
                 RequireMessage="Veuillez entrer votre Email"
                 InvalidMessage="Le Email comporte un caractère illégal"
             />
@@ -819,7 +818,6 @@ function showConnexion(user=null){
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${user.Password}"
             />
             </div>
             <button type="submit" class="btn">Se connecter</button>
