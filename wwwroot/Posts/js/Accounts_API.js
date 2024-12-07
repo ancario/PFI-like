@@ -102,7 +102,7 @@ class Accounts_API {
         return new Promise(resolve => {
             $.ajax({
                 url: this.Token_URL() ,
-                type: "DEL",
+                type: "DELETE",
                 contentType: 'application/json',
                 data: JSON.stringify(userid),
                 success: (data) => { 
