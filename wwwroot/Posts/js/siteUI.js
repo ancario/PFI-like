@@ -26,9 +26,17 @@ async function Init_UI() {
     "postSample",
     renderPosts
   );
-  $("#createPost").on("click", async function () {
-    showCreatePostForm();
-  });
+  const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
+  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
+  if(hasFullAccess){
+    $("#createPost").on("click", async function () {
+      showCreatePostForm();
+    });
+  }
+  else{
+    $("#createPost").hide();
+  }
+  
   $("#abort").on("click", async function () {
     showPosts();
   });
