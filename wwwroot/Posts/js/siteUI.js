@@ -267,8 +267,7 @@ function renderPost(post, loggedUser) {
   const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
     let crudIcon = ``
-    console.log("AAAAAAAAAAAAAAAAAABBBBBBBBBBB")
-    console.log(hasFullAccess)
+
   if(hasFullAccess){
      crudIcon = `
     <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
