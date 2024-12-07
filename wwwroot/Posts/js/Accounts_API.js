@@ -97,6 +97,24 @@ class Accounts_API {
             });
         });
     }
+    static async deconection(userid){
+        Accounts_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url: this.Token_URL() ,
+                type: "DEL",
+                contentType: 'application/json',
+                data: JSON.stringify(userid),
+                success: (data) => { 
+                    resolve(data); 
+                },
+                error: (xhr) => {
+                    Accounts_API.setHttpErrorState(xhr); 
+                    resolve(null);
+                }
+            });
+        });
+    }
 
     // static USER_KEY = "users";
     // static TOKEN_KEY = "tokens";
