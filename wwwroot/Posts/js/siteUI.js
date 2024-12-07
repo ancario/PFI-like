@@ -187,7 +187,9 @@ function showDeconnexion() {
   $("#hiddenIcon").show();
   $("#hiddenIcon2").show();
   $("#abort").show();
-  $("#viewTitle").text("Déconnexion");
+  Accounts_API.deconection();
+  
+  showPosts();
 }
 function showConnexion() {
   hidePosts();

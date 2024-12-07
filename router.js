@@ -108,6 +108,21 @@ export const TOKEN_EndPoint = function (HttpContext) {
             return true;
         }
     }
+    if (HttpContext.req.url == '/token' && HttpContext.req.method == "DELETE") {
+        try {
+            let accountsController = new AccountsController(HttpContext);
+            if (HttpContext.payload)
+                accountsController.logout(HttpContext.payload);
+            else
+                HttpContext.response.badRequest();
+            return true;
+        } catch (error) {
+            console.log("Token_EndPoint Error message: \n", error.message);
+            console.log("Stack: \n", error.stack);
+            HttpContext.response.notFound();
+            return true;
+        } 
+    }
     // request not consumed
     // must be handled by another middleware
     return false;
