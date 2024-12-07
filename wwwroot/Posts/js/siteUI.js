@@ -28,15 +28,15 @@ async function Init_UI() {
   );
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
-  if(hasFullAccess){
+
     $("#createPost").on("click", async function () {
       showCreatePostForm();
     });
-  }
-  else{
-    $("#createPost").hide();
-  }
+ 
+ 
+   
   
+ 
   $("#abort").on("click", async function () {
     showPosts();
   });
@@ -76,6 +76,14 @@ function cleanSearchKeywords() {
   });
   $("#searchKeys").val(cleanedKeywords.trim());
 }
+function gestionAddIcon() {
+  const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
+  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
+  if(!hasFullAccess){
+    $("#createPost").hide();
+  }
+ 
+}
 function showSearchIcon() {
   $("#hiddenIcon").hide();
   $("#showSearch").show();
@@ -113,6 +121,8 @@ function intialView() {
   $("#aboutContainer").hide();
   $("#errorContainer").hide();
   showSearchIcon();
+  gestionAddIcon();
+
 }
 async function showPosts(reset = false) {
   intialView();
