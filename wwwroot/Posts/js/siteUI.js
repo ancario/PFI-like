@@ -204,12 +204,14 @@ function showGestionUsager() {
   $("#abort").show();
   $("#viewTitle").text("GestionUsager");
 }
-function showpModificationProfil() {
+function showModificationProfil() {
   hidePosts();
   $("#hiddenIcon").show();
   $("#hiddenIcon2").show();
   $("#abort").show();
   $("#viewTitle").text("Modification du profil");
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  renderInscription(user);
 }
 
 function showInscription() {
