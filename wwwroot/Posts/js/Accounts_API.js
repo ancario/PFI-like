@@ -179,4 +179,29 @@ static async SaveToken(token) {
         }
     });
 }
+static async RemoveUser() {
+    return new Promise((resolve) => {
+        if (sessionStorage.getItem(this.USER_KEY)) {
+            sessionStorage.removeItem(this.USER_KEY);
+            console.log("Utilisateur supprimé.");
+            resolve(true);
+        } else {
+            console.warn("Aucun utilisateur à supprimer.");
+            resolve(false);
+        }
+    });
+}
+// Suppression d'un token dans sessionStorage
+static async RemoveToken() {
+    return new Promise((resolve) => {
+        if (sessionStorage.getItem(this.TOKEN_KEY)) {
+            sessionStorage.removeItem(this.TOKEN_KEY);
+            console.log("Token supprimé.");
+            resolve(true);
+        } else {
+            console.warn("Aucun token à supprimer.");
+            resolve(false);
+        }
+    });
+}
 }

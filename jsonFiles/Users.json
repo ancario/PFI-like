@@ -90,8 +90,8 @@
         "Password": "a",
         "Avatar": "144232c0-b1be-11ef-ba40-d1a00515a528.png",
         "Authorizations": {
-            "readAccess": 1,
-            "writeAccess": 1
+            "readAccess": 2,
+            "writeAccess": 2
         }
     }
 ]
