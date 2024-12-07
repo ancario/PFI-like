@@ -263,11 +263,22 @@ async function renderPosts(queryString) {
 }
 
 function renderPost(post, loggedUser) {
+  const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
+  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
-  let crudIcon = `
-        <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
-        <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
-        `;
+    let crudIcon = ``
+    console.log("AAAAAAAAAAAAAAAAAABBBBBBBBBBB")
+    console.log(hasFullAccess)
+  if(hasFullAccess){
+     crudIcon = `
+    <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
+    <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
+    `;
+  }
+  else{
+      crudIcon = ``
+  }
+  
 
   return $(`
         <div class="post" id="${post.Id}">
@@ -311,7 +322,7 @@ function updateDropDownMenu() {
 
   let DDMenu = $("#DDMenu");
   let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
-
+  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
   DDMenu.empty();
 
   // Affichage de l'avatar et du nom de l'utilisateur
@@ -335,16 +346,16 @@ function updateDropDownMenu() {
     );
   }
 
-  DDMenu.append($(`<div class="dropdown-divider"></div>`));
-
-  // Gestion des usagers (toujours visible)
-  DDMenu.append(
-    $(`
+ 
+//(gestion des usager)
+  if (hasFullAccess) {
+    DDMenu.append($(`<div class="dropdown-divider"></div>`));
+    DDMenu.append($(` 
         <div class="dropdown-item menuItemLayout" id="gestionUsagerCmd">
            <i class="menuIcon fa fa-users-cog mx-2"></i> Gestion des usagers
         </div>
-    `)
-  );
+    `));
+}
 
   DDMenu.append($(`<div class="dropdown-divider"></div>`));
 
