@@ -861,10 +861,10 @@ function renderInscription(user = null) {
       writeAccess: 1,
     };
 
-    user = await Users_API.Save(user, create);
-    if (!Users_API.error) {
+    user = await Accounts_API.Save(user, create);
+    if (!Accounts_API.error) {
       await showPosts();
-    } else showError("Une erreur est survenue! ", Users_API.currentHttpError);
+    } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);
   });
 }
 function RenderConnexions() {
