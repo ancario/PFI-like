@@ -818,7 +818,7 @@ function renderInscription(user = null) {
                 value="${user.Password}"
             />
             </div>
-
+<input type="hidden" id="CurrentAvatar" name="CurrentAvatar" value="${user.Avatar}" />
            
             <label class="form-label">Avatar </label>
             <div class='imageUploaderContainer'>
@@ -856,6 +856,10 @@ function renderInscription(user = null) {
       showError("confirmation mot de pass invalid");
     }
     let user = getFormData($("#userForm"));
+    // Si aucune nouvelle image n'est uploadée, conserve l'image actuelle
+    if (!user.Avatar || user.Avatar === "") {
+      user.Avatar = $("#CurrentAvatar").val();
+  }
     if(!create){
         //await Accounts_API.SaveToken(Access_token); 
         await Accounts_API.SaveUser(user); 
