@@ -857,11 +857,11 @@ function renderInscription(user = null) {
     let user = getFormData($("#userForm"));
 
     user.Authorizations = {
-      readAccess: 1,
-      writeAccess: 1,
+      readAccess: 2,
+      writeAccess: 2,
     };
 
-    user = await Accounts_API.Save(user, create);
+    user = await Accounts_API.Register(user, create);
     if (!Accounts_API.error) {
       await showPosts();
     } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);

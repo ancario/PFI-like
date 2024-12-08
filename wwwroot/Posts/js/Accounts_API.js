@@ -52,12 +52,13 @@ class Accounts_API {
             });
         });
     }
-    static async Save(data, create = true) {
-        console.log("SAAALLLLLLUUUUUTTTTT")
+
+    static async Register(data, create = true) {
+        console.log("Passe Register")
         Accounts_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
-                url: create ? this.API_URL() : this.API_URL() + "/" + data.Id,
+                url: create ? this.Register_URL() : this.Register_URL() + "/" + data.Id,
                 type: create ? "POST" : "PUT",
                 contentType: 'application/json',
                 data: JSON.stringify(data),
@@ -208,24 +209,6 @@ static async RemoveToken() {
     });
 }
 
-// static async Register(user){
-//     console.log("")
-//     Accounts_API.initHttpState();
-//     return new Promise(resolve => {
-//         $.ajax({
-//             url: this.API_URL() ,
-//             type: "POST",
-//             contentType: 'application/json',
-//             data: JSON.stringify(user),
-//             success: (data) => { 
-//                 resolve(data); 
-//             },
-//             error: (xhr) => {
-//                 Accounts_API.setHttpErrorState(xhr); 
-//                 resolve(null);
-//             }
-//         });
-//     });
-// }
+
 
 }
