@@ -752,6 +752,7 @@ function getFormData($form) {
 function renderInscription(user = null) {
   let create = user == null;
   if (create) user = newUser();
+  //sconsole.log(user.Password)
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
@@ -855,11 +856,15 @@ function renderInscription(user = null) {
       showError("confirmation mot de pass invalid");
     }
     let user = getFormData($("#userForm"));
-
+    if(!create){
+        //await Accounts_API.SaveToken(Access_token); 
+        await Accounts_API.SaveUser(user); 
+    }
     user.Authorizations = {
       readAccess: 1,
       writeAccess: 1,
     };
+
 
     user = await Users_API.Save(user, create);
     if (!Users_API.error) {
