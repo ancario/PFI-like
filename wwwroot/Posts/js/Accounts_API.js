@@ -1,6 +1,7 @@
 
 class Accounts_API {
-    static API_URL() { return "http://localhost:5000/accounts" };
+    static API_URL() { return "http://localhost:5000/api/accounts" };
+    static Register_URL() { return "http://localhost:5000/accounts/register" };
     static Token_URL() { return "http://localhost:5000/token" };
     static initHttpState() {
         this.currentHttpError = "";
@@ -51,11 +52,13 @@ class Accounts_API {
             });
         });
     }
-    static async Save(data, create = true) {
+
+    static async Register(data, create = true) {
+        console.log("Passe Register")
         Accounts_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
-                url: create ? this.API_URL() : this.API_URL() + "/" + data.Id,
+                url: create ? this.Register_URL() : this.Register_URL() + "/" + data.Id,
                 type: create ? "POST" : "PUT",
                 contentType: 'application/json',
                 data: JSON.stringify(data),
@@ -80,6 +83,7 @@ class Accounts_API {
         });
     }
     static async Login(loginInfo) {
+       
         Accounts_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
@@ -204,4 +208,7 @@ static async RemoveToken() {
         }
     });
 }
+
+
+
 }

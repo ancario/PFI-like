@@ -123,6 +123,7 @@ export const TOKEN_EndPoint = function (HttpContext) {
             return true;
         } 
     }
+    
     // request not consumed
     // must be handled by another middleware
     return false;

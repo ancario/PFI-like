@@ -861,15 +861,14 @@ function renderInscription(user = null) {
         await Accounts_API.SaveUser(user); 
     }
     user.Authorizations = {
-      readAccess: 1,
-      writeAccess: 1,
+      readAccess: 2,
+      writeAccess: 2,
     };
 
-
-    user = await Users_API.Save(user, create);
-    if (!Users_API.error) {
+    user = await Accounts_API.Register(user, create);
+    if (!Accounts_API.error) {
       await showPosts();
-    } else showError("Une erreur est survenue! ", Users_API.currentHttpError);
+    } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);
   });
 }
 function RenderConnexions() {
