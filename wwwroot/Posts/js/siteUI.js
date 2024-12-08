@@ -860,16 +860,20 @@ function renderInscription(user = null) {
     if (!user.Avatar || user.Avatar === "") {
       user.Avatar = $("#CurrentAvatar").val();
   }
-    if(!create){
-        //await Accounts_API.SaveToken(Access_token); 
-        await Accounts_API.SaveUser(user); 
-    }
     user.Authorizations = {
       readAccess: 2,
       writeAccess: 2,
     };
 
+    if(!create){
+      //await Accounts_API.SaveToken(Access_token); 
+      await Accounts_API.SaveUser(user); modify
+      await Accounts_API.modify(user); 
+  }
+  else{
     user = await Accounts_API.Register(user, create);
+  }
+   
     if (!Accounts_API.error) {
       await showPosts();
     } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);

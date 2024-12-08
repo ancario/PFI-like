@@ -2,6 +2,7 @@
 class Accounts_API {
     static API_URL() { return "http://localhost:5000/api/accounts" };
     static Register_URL() { return "http://localhost:5000/accounts/register" };
+    static Modify_URL() { return "http://localhost:5000/accounts/modify" };
     static Token_URL() { return "http://localhost:5000/token" };
     static initHttpState() {
         this.currentHttpError = "";
@@ -60,6 +61,20 @@ class Accounts_API {
             $.ajax({
                 url: create ? this.Register_URL() : this.Register_URL() + "/" + data.Id,
                 type: create ? "POST" : "PUT",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: (data) => { resolve(data); },
+                error: (xhr) => { Accounts_API.setHttpErrorState(xhr); resolve(null); }
+            });
+        });
+    }
+    static async Modify(data) {
+        console.log("Passe Modify")
+        Accounts_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url:  this.Modify_URL() ,
+                type:  "PUT",
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: (data) => { resolve(data); },
