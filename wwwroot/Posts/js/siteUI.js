@@ -867,8 +867,8 @@ function renderInscription(user = null) {
 
     if(!create){
       //await Accounts_API.SaveToken(Access_token); 
-      await Accounts_API.SaveUser(user); modify
-      await Accounts_API.modify(user); 
+      await Accounts_API.SaveUser(user); 
+      await Accounts_API.Modify(user); 
   }
   else{
     user = await Accounts_API.Register(user, create);
