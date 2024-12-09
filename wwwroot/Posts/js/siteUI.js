@@ -980,3 +980,43 @@ function RenderDeconnexions() {
       showPosts();
     });
   }
+  function renderConfirmation(user){
+    $("#form").show();
+    $("#form").empty();
+    $("#form").append(`
+         
+          <form class="form" id="userForm">
+          <div class="login-container">
+                <h3>entrer le code de verification</h3>
+               <input 
+                class="form-control"
+                name="code" 
+                id="code" 
+                placeholder="code"
+                required
+                RequireMessage="Veuillez entrer un code"
+                InvalidMessage="Le code comporte un caractère illégal"
+            />
+              <button type="submit" class="btn" id >confirmer</button>
+          </div>
+          </form>
+  
+      `);
+    initFormValidation();
+    const code = document.getElementById("code");
+    $("#cancel").on("click", async function () {
+        await showPosts();
+      });
+
+    $("#userForm").on("submit", async function (event) {
+        event.preventDefault(); // Empêche la soumission normale du formulaire
+    
+        if(code==user.VerifyCode){
+            user.VerifyCode="verified";
+        }
+        updateDropDownMenu();
+        showPosts(true);
+
+      });
+    
+  }
