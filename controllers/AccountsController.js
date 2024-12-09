@@ -171,6 +171,7 @@ export default class AccountsController extends Controller {
     }
     // PUT:account/modify body payload[{"Id": 0, "Name": "...", "Email": "...", "Password": "..."}]
     modify(user) {
+        console.log(this.HttpContext.authorizations)
         // empty asset members imply no change and there values will be taken from the stored record
         if (AccessControl.writeGranted(this.HttpContext.authorizations, AccessControl.user())) {
             if (this.repository != null) {

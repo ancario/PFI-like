@@ -874,6 +874,7 @@ function renderInscription(user = null) {
     if(!create){
       //await Accounts_API.SaveToken(Access_token); 
       await Accounts_API.SaveUser(user); 
+    
       await Accounts_API.Modify(user); 
   }
   else{
@@ -942,7 +943,6 @@ function RenderConnexions() {
 
     // Affiche les résultats ou gère les erreurs
     if (result) {
-      console.log("Connexion réussie :", result);
       
       await Accounts_API.SaveToken(result.Access_token); 
       await Accounts_API.SaveUser(result.User); 

@@ -108,19 +108,5 @@
             "writeAccess": 1
         },
         "Verifycode": 378647
-    },
-    {
-        "Id": "6a9b0e50-b581-11ef-809d-cfaaf454bdb6",
-        "Created": 1733693292,
-        "VerifyCode": 925017,
-        "Name": "anthony",
-        "Email": "anthonylabbe68@gmail.com",
-        "MatchedInput": "anthonylabbe68@gmail.com",
-        "Password": "a",
-        "Avatar": "6a9b0e51-b581-11ef-809d-cfaaf454bdb6.png",
-        "Authorizations": {
-            "readAccess": 1,
-            "writeAccess": 1
-        }
     }
 ]
