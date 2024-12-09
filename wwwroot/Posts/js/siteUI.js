@@ -751,7 +751,10 @@ function getFormData($form) {
 }
 function renderInscription(user = null) {
   let create = user == null;
-  if (create) user = newUser();
+  if (create) {
+    user = newUser();
+    pw=user.Password
+}
   //sconsole.log(user.Password)
   $("#form").show();
   $("#form").empty();
@@ -854,6 +857,9 @@ function renderInscription(user = null) {
     if (pass.value !== confirmpass.value) {
       event.preventDefault();
       showError("confirmation mot de pass invalid");
+    }
+    if(pass.value=="************"){
+        user.Password=pw
     }
     let user = getFormData($("#userForm"));
     // Si aucune nouvelle image n'est uploadée, conserve l'image actuelle
