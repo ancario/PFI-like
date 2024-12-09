@@ -68,20 +68,29 @@ class Accounts_API {
             });
         });
     }
-    static async Modify(data) {
-        console.log("Passe Modify")
-        Accounts_API.initHttpState();
-        return new Promise(resolve => {
-            $.ajax({
-                url:  this.Modify_URL() ,
-                type:  "PUT",
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: (data) => { resolve(data); },
-                error: (xhr) => { Accounts_API.setHttpErrorState(xhr); resolve(null); }
-            });
+  static async Modify(data) {
+    console.log("Passe Modify");
+    const token = sessionStorage.getItem("token"); // Récupérer le token depuis sessionStorage
+    Accounts_API.initHttpState();
+    return new Promise((resolve) => {
+        $.ajax({
+            url: this.Modify_URL(),
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            headers: { 
+                Authorization: `Bearer ${token}`
+            },
+            success: (data) => {
+                resolve(data);
+            },
+            error: (xhr) => {
+                Accounts_API.setHttpErrorState(xhr);
+                resolve(null);
+            }
         });
-    }
+    });
+}
     static async Delete(id) {
         return new Promise(resolve => {
             $.ajax({

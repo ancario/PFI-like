@@ -97,6 +97,7 @@ export default
             // Extract bearer token from head of the http request
             let access_token = req.headers["authorization"].replace('Bearer ', '');
             let token = this.findAccesToken(access_token);
+            console.log(token)
             if (token && token.User)
                 return token.User;
         }
