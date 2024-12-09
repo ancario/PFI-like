@@ -751,9 +751,13 @@ function getFormData($form) {
 }
 function renderInscription(user = null) {
   let create = user == null;
+  let pw ;
   if (create) {
     user = newUser();
-    pw=user.Password
+    
+}
+else{
+  pw=user.Password;
 }
   //sconsole.log(user.Password)
   $("#form").show();
@@ -858,14 +862,17 @@ function renderInscription(user = null) {
       event.preventDefault();
       showError("confirmation mot de pass invalid");
     }
-    if(pass.value=="************"){
-        user.Password=pw
-    }
+   
     let user = getFormData($("#userForm"));
+    if(pass.value=="************"){
+      user.Password=pw
+  }
     // Si aucune nouvelle image n'est uploadée, conserve l'image actuelle
     if (!user.Avatar || user.Avatar === "") {
       user.Avatar = $("#CurrentAvatar").val();
+      user.Avatar = user.Avatar.replace("http://localhost:5000/assetsRepository/", "");
   }
+  delete user.CurrentAvatar;
     user.Authorizations = {
       readAccess: 2,
       writeAccess: 2,
