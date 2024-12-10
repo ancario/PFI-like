@@ -844,13 +844,7 @@ function renderInscription(user = null) {
   const confirmEmail = document.getElementById("ConfirmEmail");
   const pass = document.getElementById("Password");
   const confirmpass = document.getElementById("ConfirmPassword");
-  $("#commit").click(function () {
-    $("#commit").off();
-    return $("#saveUser").trigger("click");
-  });
-  $("#cancel").on("click", async function () {
-    await showPosts();
-  });
+
   $("#userForm").on("submit", async function (event) {
     event.preventDefault();
     if (email.value !== confirmEmail.value) {
