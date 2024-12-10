@@ -825,7 +825,7 @@ else{
                 value="${user.Password}"
             />
             </div>
-<input type="hidden" id="CurrentAvatar" name="CurrentAvatar" value="${user.Avatar}" />
+
            
             <label class="form-label">Avatar </label>
             <div class='imageUploaderContainer'>
@@ -868,14 +868,14 @@ else{
       user.Password=pw
   }
     // Si aucune nouvelle image n'est uploadée, conserve l'image actuelle
-    if (!user.Avatar || user.Avatar === "") {
-      user.Avatar = $("#CurrentAvatar").val();
-      user.Avatar = user.Avatar.replace("http://localhost:5000/assetsRepository/", "");
-  }
+  //   if (!user.Avatar || user.Avatar === "") {
+  //     user.Avatar = $("#CurrentAvatar").val();
+  //     user.Avatar = user.Avatar.replace("http://localhost:5000/assetsRepository/", "");
+  // }
   delete user.CurrentAvatar;
     user.Authorizations = {
-      readAccess: 2,
-      writeAccess: 2,
+      readAccess: 1,
+      writeAccess: 1,
     };
 
     if(!create){

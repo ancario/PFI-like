@@ -69,7 +69,7 @@ class Accounts_API {
         });
     }
   static async Modify(data) {
-    console.log("Passe Modify");
+    console.log(data);
     const token = sessionStorage.getItem("token"); // Récupérer le token depuis sessionStorage
     Accounts_API.initHttpState();
     return new Promise((resolve) => {

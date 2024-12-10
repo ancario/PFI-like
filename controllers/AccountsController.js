@@ -26,7 +26,6 @@ export default class AccountsController extends Controller {
     }
     // POST: /token body payload[{"Email": "...", "Password": "..."}]
     login(loginInfo) {
-       
         if (loginInfo) {
             if (this.repository != null) {
                 let user = this.repository.findByField("Email", loginInfo.Email);
@@ -117,7 +116,6 @@ export default class AccountsController extends Controller {
 
     // POST: account/register body payload[{"Id": 0, "Name": "...", "Email": "...", "Password": "..."}]
     register(user) {
-        console.log("AAAAAAAAAAAALLLLLLLLLLLLLOOOOOOO")
         if (this.repository != null) {
             user.Created = utilities.nowInSeconds();
             let verifyCode = utilities.makeVerifyCode(6);
@@ -126,7 +124,6 @@ export default class AccountsController extends Controller {
             let newUser = this.repository.add(user);
             if (this.repository.model.state.isValid) {
                 this.HttpContext.response.created(newUser);
-                newUser.Verifycode = verifyCode;
                 this.sendVerificationEmail(newUser);
             } else {
                 if (this.repository.model.state.inConflict)
@@ -138,40 +135,46 @@ export default class AccountsController extends Controller {
             this.HttpContext.response.notImplemented();
     }
     promote(user) {
-        if (this.repository != null) {
-            let foundUser = this.repository.findByField("Id", user.Id);
-            foundUser.Authorizations.readAccess++;
-            if (foundUser.Authorizations.readAccess > 3) foundUser.Authorizations.readAccess = 1;
-            foundUser.Authorizations.writeAccess++;
-            if (foundUser.Authorizations.writeAccess > 3) foundUser.Authorizations.writeAccess = 1;
-            this.repository.update(user.Id, foundUser, false);
-            if (this.repository.model.state.isValid) {
-                let userFound = this.repository.get(foundUser.Id); // get data binded record
-                this.HttpContext.response.JSON(userFound);
-            }
-            else
-                this.HttpContext.response.badRequest(this.repository.model.state.errors);
+        if (AccessControl.writeGranted(this.HttpContext.authorizations, AccessControl.admin())) {
+            if (this.repository != null) {
+                let foundUser = this.repository.findByField("Id", user.Id);
+                foundUser.Authorizations.readAccess++;
+                if (foundUser.Authorizations.readAccess > 3) foundUser.Authorizations.readAccess = 1;
+                foundUser.Authorizations.writeAccess++;
+                if (foundUser.Authorizations.writeAccess > 3) foundUser.Authorizations.writeAccess = 1;
+                this.repository.update(user.Id, foundUser, false);
+                if (this.repository.model.state.isValid) {
+                    let userFound = this.repository.get(foundUser.Id); // get data binded record
+                    this.HttpContext.response.JSON(userFound);
+                }
+                else
+                    this.HttpContext.response.badRequest(this.repository.model.state.errors);
+            } else
+                this.HttpContext.response.notImplemented();
         } else
-            this.HttpContext.response.notImplemented();
+            this.HttpContext.response.unAuthorized("Unauthorized access");
+
     }
     block(user) {
-        if (this.repository != null) {
-            let foundUser = this.repository.findByField("Id", user.Id);
-            foundUser.Authorizations.readAccess = foundUser.Authorizations.readAccess == 1 ? -1 : 1;
-            foundUser.Authorizations.writeAccess = foundUser.Authorizations.writeAccess == 1 ? -1 : 1;
-            this.repository.update(user.Id, foundUser, false);
-            if (this.repository.model.state.isValid) {
-                userFound = this.repository.get(userFound.Id); // get data binded record
-                this.HttpContext.response.JSON(userFound);
-            }
-            else
-                this.HttpContext.response.badRequest(this.repository.model.state.errors);
+        if (AccessControl.writeGranted(this.HttpContext.authorizations, AccessControl.admin())) {
+            if (this.repository != null) {
+                let foundUser = this.repository.findByField("Id", user.Id);
+                foundUser.Authorizations.readAccess = foundUser.Authorizations.readAccess == 1 ? -1 : 1;
+                foundUser.Authorizations.writeAccess = foundUser.Authorizations.writeAccess == 1 ? -1 : 1;
+                this.repository.update(user.Id, foundUser, false);
+                if (this.repository.model.state.isValid) {
+                    userFound = this.repository.get(userFound.Id); // get data binded record
+                    this.HttpContext.response.JSON(userFound);
+                }
+                else
+                    this.HttpContext.response.badRequest(this.repository.model.state.errors);
+            } else
+                this.HttpContext.response.notImplemented();
         } else
-            this.HttpContext.response.notImplemented();
+            this.HttpContext.response.unAuthorized("Unauthorized access");
     }
     // PUT:account/modify body payload[{"Id": 0, "Name": "...", "Email": "...", "Password": "..."}]
     modify(user) {
-        console.log(this.HttpContext.authorizations)
         // empty asset members imply no change and there values will be taken from the stored record
         if (AccessControl.writeGranted(this.HttpContext.authorizations, AccessControl.user())) {
             if (this.repository != null) {
