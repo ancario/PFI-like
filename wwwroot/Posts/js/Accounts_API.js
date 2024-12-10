@@ -82,6 +82,8 @@ class Accounts_API {
                 Authorization: `Bearer ${token}`
             },
             success: (data) => {
+                
+                Accounts_API.SaveUser(data);
                 resolve(data);
             },
             error: (xhr) => {
@@ -181,17 +183,10 @@ class Accounts_API {
 static TOKEN_KEY = "token";
 
 // Sauvegarde d'un utilisateur dans sessionStorage
-static async SaveUser(user) {
-    return new Promise((resolve) => {
-        if (!user || !user.Email) {
-            console.error("L'utilisateur doit avoir un email valide.");
-            resolve(false);
-        } else {
+static  SaveUser(user) {
+   
             sessionStorage.setItem(this.USER_KEY, JSON.stringify(user)); // Stocke directement l'utilisateur
-            console.log(`Utilisateur sauvegardé : ${user.Email}`);
-            resolve(true);
-        }
-    });
+           
 }
 
 // Sauvegarde d'un token dans sessionStorage

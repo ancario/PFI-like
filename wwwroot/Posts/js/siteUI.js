@@ -27,16 +27,14 @@ async function Init_UI() {
     renderPosts
   );
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
-  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
+  const hasFullAccess =
+    user?.Authorizations?.readAccess === 2 &&
+    user?.Authorizations?.writeAccess === 2;
 
-    $("#createPost").on("click", async function () {
-      showCreatePostForm();
-    });
- 
- 
-   
-  
- 
+  $("#createPost").on("click", async function () {
+    showCreatePostForm();
+  });
+
   $("#abort").on("click", async function () {
     showPosts();
   });
@@ -78,11 +76,12 @@ function cleanSearchKeywords() {
 }
 function gestionAddIcon() {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
-  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
-  if(!hasFullAccess){
+  const hasFullAccess =
+    user?.Authorizations?.readAccess === 2 &&
+    user?.Authorizations?.writeAccess === 2;
+  if (!hasFullAccess) {
     $("#createPost").hide();
   }
- 
 }
 function showSearchIcon() {
   $("#hiddenIcon").hide();
@@ -122,7 +121,6 @@ function intialView() {
   $("#errorContainer").hide();
   showSearchIcon();
   gestionAddIcon();
-
 }
 async function showPosts(reset = false) {
   intialView();
@@ -187,7 +185,7 @@ function showDeconnexion() {
   $("#hiddenIcon").show();
   $("#hiddenIcon2").show();
   $("#abort").show();
-    RenderDeconnexions()
+  RenderDeconnexions();
 }
 function showConnexion() {
   hidePosts();
@@ -284,20 +282,21 @@ async function renderPosts(queryString) {
 
 function renderPost(post, loggedUser) {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
-  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
+  console.log(user)
+  const hasFullAccess =
+    user?.Authorizations?.readAccess === 2 &&
+    user?.Authorizations?.writeAccess === 2;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
-    let crudIcon = ``
+  let crudIcon = ``;
 
-  if(hasFullAccess){
-     crudIcon = `
+  if (hasFullAccess) {
+    crudIcon = `
     <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
     <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
     `;
+  } else {
+    crudIcon = ``;
   }
-  else{
-      crudIcon = ``
-  }
-  
 
   return $(`
         <div class="post" id="${post.Id}">
@@ -335,16 +334,19 @@ async function compileCategories() {
 function updateDropDownMenu() {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const token = sessionStorage.getItem("token"); // Vérifier si le token existe
-  const userId = user?.Email || null; // Utiliser l'email comme identifiant unique
+  const userId = user?.Id ; // Utiliser l'email comme identifiant unique
   const userName = user?.Name || "Utilisateur"; // Utiliser le nom ou une valeur par défaut
-  const avatarUrl = user?.Avatar || "./images/user-avatar.png"; // Chemin par défaut pour l'avatar
+  const avatarUrl = user?.Avatar 
 
   let DDMenu = $("#DDMenu");
   let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
-  const hasFullAccess = user?.Authorizations?.readAccess === 2 && user?.Authorizations?.writeAccess === 2;
+  const hasFullAccess =
+    user?.Authorizations?.readAccess === 2 &&
+    user?.Authorizations?.writeAccess === 2;
   DDMenu.empty();
 
   // Affichage de l'avatar et du nom de l'utilisateur
+ 
   if (userId && token) {
     DDMenu.append(
       $(`
@@ -365,16 +367,17 @@ function updateDropDownMenu() {
     );
   }
 
- 
-//(gestion des usager)
+  //(gestion des usager)
   if (hasFullAccess) {
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
-    DDMenu.append($(` 
+    DDMenu.append(
+      $(` 
         <div class="dropdown-item menuItemLayout" id="gestionUsagerCmd">
            <i class="menuIcon fa fa-users-cog mx-2"></i> Gestion des usagers
         </div>
-    `));
-}
+    `)
+    );
+  }
 
   DDMenu.append($(`<div class="dropdown-divider"></div>`));
 
@@ -751,14 +754,12 @@ function getFormData($form) {
 }
 function renderInscription(user = null) {
   let create = user == null;
-  let pw ;
+  let pw;
   if (create) {
     user = newUser();
-    
-}
-else{
-  pw=user.Password;
-}
+  } else {
+    pw = user.Password;
+  }
   //sconsole.log(user.Password)
   $("#form").show();
   $("#form").empty();
@@ -809,20 +810,18 @@ else{
                 name="Password" 
                 id="Password" 
                 placeholder="mot de pass"
-                required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${user.Password}"
+                value=""
             />
             <input 
                 class="form-control"
                 name="Password" 
                 id="ConfirmPassword" 
                 placeholder="verification"
-                required
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
-                value="${user.Password}"
+                value=""
             />
             </div>
 
@@ -862,32 +861,19 @@ else{
       event.preventDefault();
       showError("confirmation mot de pass invalid");
     }
-   
-    let user = getFormData($("#userForm"));
-    if(pass.value=="************"){
-      user.Password=pw
-  }
-    // Si aucune nouvelle image n'est uploadée, conserve l'image actuelle
-  //   if (!user.Avatar || user.Avatar === "") {
-  //     user.Avatar = $("#CurrentAvatar").val();
-  //     user.Avatar = user.Avatar.replace("http://localhost:5000/assetsRepository/", "");
-  // }
-  delete user.CurrentAvatar;
-    user.Authorizations = {
-      readAccess: 1,
-      writeAccess: 1,
-    };
 
-    if(!create){
-      //await Accounts_API.SaveToken(Access_token); 
-      await Accounts_API.SaveUser(user); 
-    
-      await Accounts_API.Modify(user); 
-  }
-  else{
-    user = await Accounts_API.Register(user, create);
-  }
+    let user = getFormData($("#userForm"));
    
+    
+
+    if (!create) {
+   
+
+      await Accounts_API.Modify(user);
+    } else {
+      user = await Accounts_API.Register(user, create);
+    }
+
     if (!Accounts_API.error) {
       await showPosts();
     } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);
@@ -950,9 +936,8 @@ function RenderConnexions() {
 
     // Affiche les résultats ou gère les erreurs
     if (result) {
-      
-      await Accounts_API.SaveToken(result.Access_token); 
-      await Accounts_API.SaveUser(result.User); 
+      await Accounts_API.SaveToken(result.Access_token);
+      await Accounts_API.SaveUser(result.User);
       updateDropDownMenu();
       showPosts(true);
     } else {
@@ -962,9 +947,9 @@ function RenderConnexions() {
   });
 }
 function RenderDeconnexions() {
-    $("#form").show();
-    $("#form").empty();
-    $("#form").append(`
+  $("#form").show();
+  $("#form").empty();
+  $("#form").append(`
          
           <form class="form" id="userForm">
           <div class="login-container">
@@ -974,23 +959,23 @@ function RenderDeconnexions() {
           </form>
   
       `);
-    initFormValidation();
-    $("#cancel").on("click", async function () {
-        await showPosts();
-      });
-    $("#userForm").on("submit", async function (event) {
-      event.preventDefault();
-      const user = JSON.parse(sessionStorage.getItem("user"));
-      Accounts_API.RemoveUser();
-      Accounts_API.RemoveToken();
-      Accounts_API.deconection(user.id);
-      showPosts();
-    });
-  }
-  function renderConfirmation(user){
-    $("#form").show();
-    $("#form").empty();
-    $("#form").append(`
+  initFormValidation();
+  $("#cancel").on("click", async function () {
+    await showPosts();
+  });
+  $("#userForm").on("submit", async function (event) {
+    event.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    Accounts_API.RemoveUser();
+    Accounts_API.RemoveToken();
+    Accounts_API.deconection(user.id);
+    showPosts();
+  });
+}
+function renderConfirmation(user) {
+  $("#form").show();
+  $("#form").empty();
+  $("#form").append(`
          
           <form class="form" id="userForm">
           <div class="login-container">
@@ -1009,21 +994,19 @@ function RenderDeconnexions() {
           </form>
   
       `);
-    initFormValidation();
-    const code = document.getElementById("code");
-    $("#cancel").on("click", async function () {
-        await showPosts();
-      });
+  initFormValidation();
+  const code = document.getElementById("code");
+  $("#cancel").on("click", async function () {
+    await showPosts();
+  });
 
-    $("#userForm").on("submit", async function (event) {
-        event.preventDefault(); // Empêche la soumission normale du formulaire
-    
-        if(code==user.VerifyCode){
-            user.VerifyCode="verified";
-        }
-        updateDropDownMenu();
-        showPosts(true);
+  $("#userForm").on("submit", async function (event) {
+    event.preventDefault(); // Empêche la soumission normale du formulaire
 
-      });
-    
-  }
+    if (code == user.VerifyCode) {
+      user.VerifyCode = "verified";
+    }
+    updateDropDownMenu();
+    showPosts(true);
+  });
+}
