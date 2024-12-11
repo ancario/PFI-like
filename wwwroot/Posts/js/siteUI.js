@@ -350,7 +350,14 @@ function renderPost(post, loggedUser) {
 }else {
     crudIcon = ``;
   }
- 
+ if(hasFullAccess||true){
+   crudIcon +=
+  `
+  <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
+  <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
+  `;
+
+ }
    
   
   
