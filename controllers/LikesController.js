@@ -7,7 +7,7 @@ export default class LikesController extends Controller {
         super(HttpContext, new Repository(new LikeModel()));
     }
     // POST: Likes/LikeThat 
-    LikeThat(like) {
+    likethat(like) {
         console.log("passeLikeThat")
         if (this.repository != null) {
             like.Created = utilities.nowInSeconds();

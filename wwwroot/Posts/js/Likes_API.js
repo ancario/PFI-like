@@ -1,7 +1,9 @@
+
+
 class Likes_API {
     static Host_URL() { return "http://localhost:5000"; }
     static API_URL() { return this.Host_URL() + "/likes" };
-    static Likes_URL() { return "http://localhost:5000/likes/LikeThat" };
+    static Likes_URL() { return "http://localhost:5000/likes/likethat" };
     static initHttpState() {
         this.currentHttpError = "";
         this.currentStatus = 0;
@@ -80,21 +82,24 @@ class Likes_API {
         });
     }
     static async ILikeThat(idPost, IdUserWhoLikeThePost) {
-        console.log(idPost);
-        console.log(IdUserWhoLikeThePost);
+     
     
-      
-        const likeData = {
-            IdPost: idPost,
-            ListOfUserLike: [IdUserWhoLikeThePost], // Liste d'utilisateurs qui ont liké
-        };
-    
+       let Like =  Likes_API.newLike(idPost,IdUserWhoLikeThePost);
+       console.log(Like);
+       
         // Sauvegarder l'objet "Like" en utilisant la méthode Save
-        const response = await Likes_API.Save(likeData, true); // true pour créer un nouveau like
+        const response = await Likes_API.Save(Like, true); // true pour créer un nouveau like
         if (response) {
             console.log("Like enregistré avec succès !");
         } else {
             console.log("Erreur lors de l'enregistrement du like.");
         }
+    }
+    static newLike(idPost, IdUserWhoLikeThePost) {
+        let Like = {};
+        Like.Id = 0;
+        Like.IdPost = idPost;
+        Like.ListOfUserLike = [IdUserWhoLikeThePost]; 
+        return Like;  
     }
 }
