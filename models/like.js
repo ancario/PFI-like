@@ -5,7 +5,7 @@ export default class Like extends Model {
     {
         super(true);
       
-        this.addField('IdPost','integer');
+        this.addField('IdPost','string');
         //list if Id integer
         this.addField('ListOfUserLike','object');
 

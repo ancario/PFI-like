@@ -27,12 +27,12 @@ export default class LikesController extends Controller {
             this.HttpContext.response.notImplemented();
     }
        // PUT: Likes/UpdateLike/:id
-       updatelike(id, updatedData) {
+       updatelike( updatedData) {
         console.log("passeUpdateLike");
         if (this.repository != null) {
-            let updatedLike = this.repository.update(id, updatedData);
+            let updatedLike = this.repository.update(this.HttpContext.path.id , updatedData);
             if (this.repository.model.state.isValid) {
-                this.HttpContext.response.ok(updatedLike);
+                this.HttpContext.response.JSON(updatedLike);
             } else {
                 if (this.repository.model.state.notFound)
                     this.HttpContext.response.notFound(this.repository.model.state.errors);
@@ -45,14 +45,14 @@ export default class LikesController extends Controller {
     }
 
     // GET: Likes/FindLike/:field/:value
-    findlike(field, value) {
+    findlike( value) {
         console.log("passeFindLike");
         if (this.repository != null) {
-            let like = this.repository.findByField(field, value);
+            let like = this.repository.findByFilter((like) => like.IdPost == value);
             if (like) {
-                this.HttpContext.response.ok(like);
+                this.HttpContext.response.JSON(like);
             } else {
-                this.HttpContext.response.notFound({ message: `No like found with ${field}: ${value}` });
+                this.HttpContext.response.notFound({ message: `No like found with  ${value}` });
             }
         } else {
             this.HttpContext.response.notImplemented();

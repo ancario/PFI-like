@@ -1,14 +1,7 @@
 [
     {
-        "Id": "1",
-        "IdPost": 838460590,
-        "ListOfUserLike": [
-            "41601ed0-b780-11ef-93b0-1b8f6177b3f5"
-        ]
-    },
-    {
-        "Id": "a3e69650-b7e0-11ef-9ce1-491874201941",
-        "IdPost": 83846050,
+        "Id": "ae6f08b0-b7e9-11ef-9cf0-1fcf874c1743",
+        "IdPost": "83846050-a060-11ef-966f-f12ac67d776c",
         "ListOfUserLike": [
             "41601ed0-b780-11ef-93b0-1b8f6177b3f5"
         ]
