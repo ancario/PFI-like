@@ -304,10 +304,35 @@ async function renderPosts(queryString) {
   removeWaitingGif();
   return endOfData;
 }
+function getLikeIcon(userId, like) {
+  // Si l'objet like est vide ou non défini, retourner un cœur par défaut (cœur vide)
+  if (!like) {
+    return "fa-regular fa-heart"; // Cœur vide par défaut
+  }
+
+  // Vérifier si la liste des utilisateurs ayant aimé le post est vide
+  if (!like.ListOfUserLike || like.ListOfUserLike.length === 0) {
+    // Si la liste est vide, retourner un cœur vide
+    return "fa-regular fa-heart"; // Cœur vide
+  }
+
+  // Vérifier si l'ID de l'utilisateur est dans la liste des likes
+  const isUserLiked = like.ListOfUserLike.includes(userId);
+
+  // Retourner l'icône appropriée : cœur plein ou cœur vide
+  return isUserLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"; // Cœur plein si l'utilisateur a aimé, sinon cœur vide
+}
 /////////////////////////////////////////////////////////////////////
 function renderPost(post, loggedUser) {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
-  console.log(user)
+  const like = Likes_API.FindLike(post.Id)[0];
+  let nombreLike = 0;
+  if (like && like.ListOfUserLike) {
+    nombreLike = like.ListOfUserLike.length;
+  }
+
+
+
   const hasFullAccess =
     user?.Authorizations?.readAccess === 2 &&
     user?.Authorizations?.writeAccess === 2;
@@ -316,20 +341,18 @@ function renderPost(post, loggedUser) {
     user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
-
-  if (hasFullAccess) {
-    crudIcon = `
-    <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
-    <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
+  const heartIconClass = getLikeIcon(user.Id, like);
+  if (hasHalfAccess ) {
+    crudIcon += `
+       <span class="" postId="${post.Id}" title="nombre de personne qui aime ce post">${nombreLike}</span>
+        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="Aimer ce post"></span>
     `;
-  } else {
+}else {
     crudIcon = ``;
   }
-  if(hasHalfAccess || true){
-    crudIcon += `
-    <span class="likeCmd cmdIconSmall fa fa-heart" postId="${post.Id}" title="Aimer ce post"></span>
-  `;
-  }
+ 
+   
+  
   
   return $(`
         <div class="post" id="${post.Id}">

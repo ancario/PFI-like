@@ -1,9 +1,1 @@
-[
-    {
-        "Id": "ae6f08b0-b7e9-11ef-9cf0-1fcf874c1743",
-        "IdPost": "83846050-a060-11ef-966f-f12ac67d776c",
-        "ListOfUserLike": [
-            "41601ed0-b780-11ef-93b0-1b8f6177b3f5"
-        ]
-    }
-]
+[{"IdPost":"83846050-a060-11ef-966f-f12ac67d776c","ListOfUserLike":["41601ed0-b780-11ef-93b0-1b8f6177b3f5","f11ee960-aa82-11ef-b942-e7f097a2ee7a"],"Id":"ae6f08b0-b7e9-11ef-9cf0-1fcf874c1743"},{"IdPost":"862171f0-9eb6-11ef-b0c1-abd3892cdb73","ListOfUserLike":["f11ee960-aa82-11ef-b942-e7f097a2ee7a"],"Id":"92a667d0-b7fe-11ef-9e65-8fe41c083c61"}]
