@@ -9,7 +9,7 @@ export default class Like extends Model {
         //list if Id integer
         this.addField('ListOfUserLike','object');
 
-        this.setKey("Id");
+        this.setKey("IdPost");
     }
 
 }

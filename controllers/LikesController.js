@@ -7,16 +7,15 @@ export default class LikesController extends Controller {
         super(HttpContext, new Repository(new LikeModel()));
     }
     // POST: Likes/LikeThat 
-    likethat(like) {
+    likethat(likes) {
         console.log("passeLikeThat")
         if (this.repository != null) {
-            like.Created = utilities.nowInSeconds();
-            let verifyCode = utilities.makeVerifyCode(6);
-            like.VerifyCode = verifyCode;
-            like.Authorizations = AccessControl.user();
-            let newUser = this.repository.add(like);
+           
+           
+         
+            let like = this.repository.add(likes);
             if (this.repository.model.state.isValid) {
-                this.HttpContext.response.created(newUser);
+                this.HttpContext.response.created(like);
               
             } else {
                 if (this.repository.model.state.inConflict)
@@ -26,6 +25,38 @@ export default class LikesController extends Controller {
             }
         } else
             this.HttpContext.response.notImplemented();
+    }
+       // PUT: Likes/UpdateLike/:id
+       updatelike(id, updatedData) {
+        console.log("passeUpdateLike");
+        if (this.repository != null) {
+            let updatedLike = this.repository.update(id, updatedData);
+            if (this.repository.model.state.isValid) {
+                this.HttpContext.response.ok(updatedLike);
+            } else {
+                if (this.repository.model.state.notFound)
+                    this.HttpContext.response.notFound(this.repository.model.state.errors);
+                else
+                    this.HttpContext.response.badRequest(this.repository.model.state.errors);
+            }
+        } else {
+            this.HttpContext.response.notImplemented();
+        }
+    }
+
+    // GET: Likes/FindLike/:field/:value
+    findlike(field, value) {
+        console.log("passeFindLike");
+        if (this.repository != null) {
+            let like = this.repository.findByField(field, value);
+            if (like) {
+                this.HttpContext.response.ok(like);
+            } else {
+                this.HttpContext.response.notFound({ message: `No like found with ${field}: ${value}` });
+            }
+        } else {
+            this.HttpContext.response.notImplemented();
+        }
     }
 
 }

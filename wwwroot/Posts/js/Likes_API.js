@@ -1,22 +1,25 @@
-
-
 class Likes_API {
     static Host_URL() { return "http://localhost:5000"; }
-    static API_URL() { return this.Host_URL() + "/likes" };
-    static Likes_URL() { return "http://localhost:5000/likes/likethat" };
+    static API_URL() { return this.Host_URL() + "/likes"; }
+    static Likes_URL() { return this.Host_URL() + "/likes/likethat"; }
+    static UpdateLike_URL() { return this.Host_URL() + "/likes/updatelike"; } // URL pour mise à jour
+    static FindLike_URL() { return this.Host_URL() + "/likes/findlike"; } // URL pour recherche
+
     static initHttpState() {
         this.currentHttpError = "";
         this.currentStatus = 0;
         this.error = false;
     }
+
     static setHttpErrorState(xhr) {
         if (xhr.responseJSON)
             this.currentHttpError = xhr.responseJSON.error_description;
         else
-            this.currentHttpError = xhr.statusText == 'error' ? "Service introuvable" : xhr.statusText;
+            this.currentHttpError = xhr.statusText === 'error' ? "Service introuvable" : xhr.statusText;
         this.currentStatus = xhr.status;
         this.error = true;
     }
+
     static async HEAD() {
         Likes_API.initHttpState();
         return new Promise(resolve => {
@@ -29,6 +32,41 @@ class Likes_API {
             });
         });
     }
+
+    // Nouvelle fonction pour mettre à jour un "like"
+    static async UpdateLike(id, updatedData) {
+        Likes_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url: `${this.UpdateLike_URL()}/${id}`, // Appel de l'URL dédiée
+                type: "PUT",
+                contentType: 'application/json',
+                data: JSON.stringify(updatedData),
+                success: (data) => { resolve(data); },
+                error: (xhr) => {
+                    Likes_API.setHttpErrorState(xhr);
+                    resolve(null);
+                }
+            });
+        });
+    }
+
+    // Nouvelle fonction pour rechercher un "like"
+    static async FindLike(field, value) {
+        Likes_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url: `${this.FindLike_URL()}/${field}/${value}`, // Appel de l'URL dédiée
+                type: "GET",
+                success: (data) => { resolve(data); },
+                error: (xhr) => {
+                    Likes_API.setHttpErrorState(xhr);
+                    resolve(null);
+                }
+            });
+        });
+    }
+
     static async Get(id = null) {
         Likes_API.initHttpState();
         return new Promise(resolve => {
@@ -39,6 +77,7 @@ class Likes_API {
             });
         });
     }
+
     static async GetQuery(queryString = "") {
         Likes_API.initHttpState();
         return new Promise(resolve => {
@@ -53,11 +92,12 @@ class Likes_API {
             });
         });
     }
+
     static async Save(data, create = true) {
         Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
-                url: this.Likes_URL() ,
+                url: this.Likes_URL(),
                 type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(data),
@@ -66,6 +106,7 @@ class Likes_API {
             });
         });
     }
+
     static async Delete(id) {
         return new Promise(resolve => {
             $.ajax({
@@ -76,17 +117,17 @@ class Likes_API {
                     resolve(true);
                 },
                 error: (xhr) => {
-                    Likes_API.setHttpErrorState(xhr); resolve(null);
+                    Likes_API.setHttpErrorState(xhr);
+                    resolve(null);
                 }
             });
         });
     }
+
     static async ILikeThat(idPost, IdUserWhoLikeThePost) {
-     
-    
-       let Like =  Likes_API.newLike(idPost,IdUserWhoLikeThePost);
-       console.log(Like);
-       
+        let Like = Likes_API.newLike(idPost, IdUserWhoLikeThePost);
+        console.log(Like);
+
         // Sauvegarder l'objet "Like" en utilisant la méthode Save
         const response = await Likes_API.Save(Like, true); // true pour créer un nouveau like
         if (response) {
@@ -95,11 +136,12 @@ class Likes_API {
             console.log("Erreur lors de l'enregistrement du like.");
         }
     }
+
     static newLike(idPost, IdUserWhoLikeThePost) {
         let Like = {};
         Like.Id = 0;
         Like.IdPost = idPost;
-        Like.ListOfUserLike = [IdUserWhoLikeThePost]; 
-        return Like;  
+        Like.ListOfUserLike = [IdUserWhoLikeThePost];
+        return Like;
     }
 }
