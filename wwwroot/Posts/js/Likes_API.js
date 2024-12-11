@@ -1,6 +1,7 @@
-
-class Users_API {
-    static API_URL() { return "http://localhost:5000/api/users" };
+class Likes_API {
+    static Host_URL() { return "http://localhost:5000"; }
+    static API_URL() { return this.Host_URL() + "/likes" };
+    static Likes_URL() { return "http://localhost:5000/likes/LikeThat" };
     static initHttpState() {
         this.currentHttpError = "";
         this.currentStatus = 0;
@@ -54,8 +55,8 @@ class Users_API {
         Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
-                url: create ? this.API_URL() : this.API_URL() + "/" + data.Id,
-                type: create ? "POST" : "PUT",
+                url: this.Likes_URL() ,
+                type: "POST",
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: (data) => { resolve(data); },
@@ -77,5 +78,23 @@ class Users_API {
                 }
             });
         });
+    }
+    static async ILikeThat(idPost, IdUserWhoLikeThePost) {
+        console.log(idPost);
+        console.log(IdUserWhoLikeThePost);
+    
+      
+        const likeData = {
+            IdPost: idPost,
+            ListOfUserLike: [IdUserWhoLikeThePost], // Liste d'utilisateurs qui ont liké
+        };
+    
+        // Sauvegarder l'objet "Like" en utilisant la méthode Save
+        const response = await Likes_API.Save(likeData, true); // true pour créer un nouveau like
+        if (response) {
+            console.log("Like enregistré avec succès !");
+        } else {
+            console.log("Erreur lors de l'enregistrement du like.");
+        }
     }
 }
