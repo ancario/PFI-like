@@ -69,16 +69,17 @@
         "Id": "a634d710-46c0-11ee-9c7d-4dfffb69e19c"
     },
     {
-        "Email": "nicolaschourot@videotron.ca",
-        "Password": "password",
-        "Name": "Nicolas Chourot",
-        "Avatar": "f11ee961-aa82-11ef-b942-e7f097a2ee7a.jpeg",
-        "Created": 1732470515,
-        "Authorizations": {
-            "readAccess": 1,
-            "writeAccess": 1
-        },
+        "Created": 1733972915,
         "VerifyCode": "verified",
+        "Name": "Nicolas Chourotasss",
+        "Email": "nicolaschourot@videotron.ca",
+        "MatchedInput": "nicolaschourot@videotron.ca",
+        "Password": "password",
+        "Avatar": "f11ee961-aa82-11ef-b942-e7f097a2ee7a.jpeg",
+        "Authorizations": {
+            "readAccess": 3,
+            "writeAccess": 3
+        },
         "Id": "f11ee960-aa82-11ef-b942-e7f097a2ee7a"
     },
     {

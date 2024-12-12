@@ -14,6 +14,7 @@ RouteRegister.add('POST', 'accounts', 'register');
 RouteRegister.add('GET', 'accounts', 'verify');
 RouteRegister.add('DELETE', 'accounts', 'logout');
 RouteRegister.add('PUT', 'accounts', 'modify');
+RouteRegister.add('GET', 'accounts', 'allname');
 RouteRegister.add('GET', 'accounts', 'remove');
 RouteRegister.add('GET', 'accounts', 'conflict');
 RouteRegister.add('POST', 'accounts', 'block');

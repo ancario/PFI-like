@@ -4,6 +4,7 @@ class Accounts_API {
     static Register_URL() { return "http://localhost:5000/accounts/register" };
     static Modify_URL() { return "http://localhost:5000/accounts/modify" };
     static Token_URL() { return "http://localhost:5000/token" };
+    static Index_URL() { return "http://localhost:5000/accounts/allname" };
     static initHttpState() {
         this.currentHttpError = "";
         this.currentStatus = 0;
@@ -53,7 +54,22 @@ class Accounts_API {
             });
         });
     }
+    static  index() {
+        
+    
 
+        Accounts_API.initHttpState();
+        return new Promise(resolve => {
+            $.ajax({
+                url: this.Index_URL(),
+                type: "GET",
+                contentType: 'application/json',
+               
+                success: (data) => { resolve(data); },
+                error: (xhr) => { Accounts_API.setHttpErrorState(xhr); resolve(null); }
+            });
+        });
+    }
     static async Register(data, create = true) {
         console.log("Passe Register")
         Accounts_API.initHttpState();

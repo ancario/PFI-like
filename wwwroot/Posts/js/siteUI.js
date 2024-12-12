@@ -322,15 +322,33 @@ function getLikeIcon(userId, like) {
   return isUserLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"; // Cœur plein si l'utilisateur a aimé, sinon cœur vide
 }
 /////////////////////////////////////////////////////////////////////
+  async function fetchAllUsers() {
+  let alluser =  await  Accounts_API.index(); 
+//  console.log(alluser); 
+  return alluser;
+}
+
+/////////////////////////////////////////////////////////////////////
 function renderPost(post, loggedUser) {
+  
+ // let alluser =  fetchAllUsers();
+  //console.log(typeof alluser )
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const like = Likes_API.FindLike(post.Id)[0];
   let nombreLike = 0;
   if (like && like.ListOfUserLike) {
     nombreLike = like.ListOfUserLike.length;
   }
+  console.log(post.listename);
 
+  // console.log( alluser  );
+  // let tableauUser = Object.values(alluser)
+  // console.log(tableauUser);
+  // const likedUserNames =  tableauUser// Convertir en tableau pour traiter les valeurs
+  //   .filter(user => like.ListOfUserLike.includes(user.Id)) // Filtrer les utilisateurs correspondants
+  //   .map(user => user.Name); // Extraire les noms
 
+  //   console.log(likedUserNames);
 
   const hasFullAccess =
     user?.Authorizations?.readAccess === 2 &&
@@ -340,7 +358,8 @@ function renderPost(post, loggedUser) {
     user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
-  const heartIconClass = getLikeIcon(user.Id, like);
+
+  const heartIconClass = getLikeIcon(user?.Id, like);
   if (hasHalfAccess ) {
     crudIcon += `
        <span class="" postId="${post.Id}" title="nombre de personne qui aime ce post">${nombreLike}</span>
