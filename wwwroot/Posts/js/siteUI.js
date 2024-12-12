@@ -209,13 +209,14 @@ function showDeconnexion() {
   RenderDeconnexions();
 }
 /////////////////////////////////////////////////////////////////////
-function showConnexion() {
+function showConnexion(texte=null) {
+  console.log(texte);
   hidePosts();
   $("#hiddenIcon").show();
   $("#hiddenIcon2").show();
   $("#abort").show();
   $("#viewTitle").text("Connexion");
-  RenderConnexions();
+  RenderConnexions(texte);
 }
 /////////////////////////////////////////////////////////////////////
 function showGestionUsager() {
@@ -973,17 +974,22 @@ function renderInscription(user = null) {
     let user = getFormData($("#userForm"));
 
 
-
+let fini = true;
     if (!create) {
 
 
       await Accounts_API.Modify(user);
     } else {
       user = await Accounts_API.Register(user, create);
+      showConnexion("un mail de confirmation vous à été envoyer")
+      fini= false;
     }
 
     if (!Accounts_API.error) {
-      await showPosts();
+      if(!fini){
+        await showPosts();
+      }
+      
     } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);
   });
 }
