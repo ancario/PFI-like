@@ -17,24 +17,24 @@ export default class Post extends Model {
     bindExtraData(instance){
 
         instance=super.bindExtraData(instance);
-        let LikeRepository = new Repository(new Like());
+    //     let LikeRepository = new Repository(new Like());
 
-        let UserRepository = new Repository(new User());
+    //     let UserRepository = new Repository(new User());
 
-        let alluser = UserRepository.getAll();
+    //     let alluser = UserRepository.getAll();
 
-        let TheLike = LikeRepository.findByField("IdPost",instance.id);
+    //     let TheLike = LikeRepository.findByField("IdPost",instance.id);
 
-        const likedUserNames =  alluser
-       .filter(user => like.ListOfUserLike.includes(user.Id)) 
-        .map(user => user.Name); // Extraire les noms
+    //     const likedUserNames =  alluser
+    //    .filter(user => TheLike.ListOfUserLike.includes(user.Id)) 
+    //     .map(user => user.Name); // Extraire les noms
 
-        if(!likedUserNames){
-            instance.listename = likedUserNames;
-        }
-        else{
-            instance.listename = "test pas de user" ;
-        }
+    //     if(!likedUserNames){
+    //         instance.listename = likedUserNames;
+    //     }
+    //     else{
+    //         instance.listename = "test pas de user" ;
+    //     }
        
       return instance
     }
