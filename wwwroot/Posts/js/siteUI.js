@@ -865,6 +865,7 @@ function getFormData($form) {
   });
   return jsonObject;
 }
+//
 function renderInscription(user = null) {
   let create = user == null;
   let pw;
