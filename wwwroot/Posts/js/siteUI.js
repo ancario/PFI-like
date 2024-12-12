@@ -77,8 +77,8 @@ function cleanSearchKeywords() {
 function gestionAddIcon() {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const hasFullAccess =
-    user?.Authorizations?.readAccess === 2 &&
-    user?.Authorizations?.writeAccess === 2;
+    user?.Authorizations?.readAccess >= 2 &&
+    user?.Authorizations?.writeAccess >= 2;
   if (!hasFullAccess) {
     $("#createPost").hide();
   }
@@ -360,7 +360,12 @@ function renderPost(post, loggedUser) {
     user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
-let listName = post.listename.join("\n")
+  let listName = "personne n'aime ce commentaire pour l'instant l'aimez vous?";
+  console.log(post.listename)
+  if(post.listename){
+    listName = post.listename.join("\n");
+  }
+
   const heartIconClass = getLikeIcon(user?.Id, like);
   if (hasHalfAccess ) {
     crudIcon += `
@@ -758,6 +763,7 @@ function newUser() {
   return user;
 }
 function renderPostForm(post = null) {
+  const user = JSON.parse(sessionStorage.getItem("user"));
   let create = post == null;
   if (create) post = newPost();
   $("#form").show();
@@ -822,7 +828,9 @@ function renderPostForm(post = null) {
   });
   $("#postForm").on("submit", async function (event) {
     event.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem("user"));
     let post = getFormData($("#postForm"));
+    post.IdUserWhoPost = user.Id;
     if (post.Category != selectedCategory) selectedCategory = "";
     if (create || !("keepDate" in post)) post.Date = Local_to_UTC(Date.now());
     delete post.keepDate;

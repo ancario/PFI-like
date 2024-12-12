@@ -11,7 +11,7 @@ export default class Post extends Model {
     this.addField("Category", "string");
     this.addField("Image", "asset");
     this.addField("Date", "integer");
-
+    this.addField("IdUserWhoPost", "string");
     this.setKey("Title");
   }
   bindExtraData(instance) {
@@ -34,7 +34,7 @@ export default class Post extends Model {
     if (likedUserNames) {
       instance.listename = likedUserNames;
     } else {
-      instance.listename = "test pas de users";
+      instance.listename = null;
     }
 
     return instance;
