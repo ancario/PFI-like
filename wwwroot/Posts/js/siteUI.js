@@ -184,9 +184,42 @@ function showDeletePostForm(id) {
 
 function handleLikePost(idPost) {
   const user = JSON.parse(sessionStorage.getItem("user")); 
-  const userId = user?.Id
-  Likes_API.ILikeThat(idPost,userId);
-console.log("allo log like")
+  const userId = user?.Id;
+  
+  if (!userId) {
+    console.error("Utilisateur non connecté");
+    return;
+  }
+
+ 
+  Likes_API.ILikeThat(idPost, userId);
+  console.log("allo log like");
+
+
+  const likeButton = document.querySelector(`.likeCmd[postId="${idPost}"]`);
+  const countSpan = likeButton?.previousElementSibling;
+
+  if (!likeButton || !countSpan) {
+    console.error("Élément introuvable pour le postId :", idPost);
+    return;
+  }
+
+  // Conversion du compteur actuel
+  let nombreLike = parseInt(countSpan.textContent, 10);
+
+  // Inverser la classe et ajuster le compteur
+  if (likeButton.classList.contains("fa-solid")) {
+    likeButton.classList.remove("fa-solid");
+    likeButton.classList.add("fa-regular");
+    nombreLike -= 1; // Décrémenter si déjà aimé
+  } else {
+    likeButton.classList.remove("fa-regular");
+    likeButton.classList.add("fa-solid");
+    nombreLike += 1; // Incrémenter si pas encore aimé
+  }
+
+  // Mise à jour du DOM
+  countSpan.textContent = nombreLike;
 }
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
