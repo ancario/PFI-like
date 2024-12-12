@@ -383,8 +383,18 @@ function renderPost(post, loggedUser) {
   `;
 
  }
-   
-  
+   console.log(post.userOwners );
+   console.log(post.test );
+   let addOwner= ``;
+  if(post.userOwners){
+    let photo = "http://localhost:5000/assetsRepository/" +post.userOwners.Avatar;
+    addOwner+=`
+            <div class="avatar-container">
+                <div class="avatar" style="background-image:url('${photo}');"></div>
+                <span>${post.userOwners.Name}</span>
+            </div>
+    `
+  }
   
   return $(`
         <div class="post" id="${post.Id}">
@@ -394,6 +404,7 @@ function renderPost(post, loggedUser) {
             </div>
             <div class="postTitle"> ${post.Title} </div>
             <img class="postImage" src='${post.Image}'/>
+          ${addOwner}
             <div class="postDate"> ${date} </div>
             <div postId="${post.Id}" class="postTextContainer hideExtra">
                 <div class="postText" >${post.Text}</div>

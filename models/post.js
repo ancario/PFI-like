@@ -19,6 +19,15 @@ export default class Post extends Model {
     let LikeRepository = new Repository(new Like());
 
     let UserRepository = new Repository(new User());
+
+    let  userOwners=null;
+    instance.test =instance.IdUserWhoPost; 
+    if(instance.IdUserWhoPost){
+        instance.userOwners  = UserRepository.findByField("Id", instance.IdUserWhoPost);
+        
+    }
+     
+
     instance.postID =  instance.Id;
     let alluser = UserRepository.getAll();
     let likedUserNames = null;
