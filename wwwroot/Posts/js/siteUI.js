@@ -353,8 +353,8 @@ function renderPost(post, loggedUser) {
   //   console.log(likedUserNames);
 
   const hasFullAccess =
-    user?.Authorizations?.readAccess === 2 &&
-    user?.Authorizations?.writeAccess === 2;
+    user?.Authorizations?.readAccess >= 2 &&
+    user?.Authorizations?.writeAccess >= 2;
     const hasHalfAccess =
     user?.Authorizations?.readAccess >=1 &&
     user?.Authorizations?.writeAccess >=1 ;
@@ -370,7 +370,7 @@ let listName = post.listename.join("\n")
 }else {
     crudIcon = ``;
   }
- if(hasFullAccess||true){
+ if(hasFullAccess){
    crudIcon +=
   `
   <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
