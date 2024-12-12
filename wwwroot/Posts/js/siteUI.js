@@ -1043,11 +1043,13 @@ function RenderConnexions() {
 
     // Affiche les résultats ou gère les erreurs
     if (result) {
-      await Accounts_API.SaveToken(result.Access_token);
-      await Accounts_API.SaveUser(result.User);
+     
+      
       console.log(result.User.VerifyCode)
       updateDropDownMenu();
       if(result.User.VerifyCode=="verified"){
+        await Accounts_API.SaveToken(result.Access_token);
+        await Accounts_API.SaveUser(result.User);
         showPosts(true);
       }
       else{
