@@ -1117,10 +1117,18 @@ function renderConfirmation(user) {
   $("#userForm").on("submit", async function (event) {
     const code = document.getElementById("code").value;
     event.preventDefault(); // Empêche la soumission normale du formulaire
-    const result = await Accounts_API.verifycode(code,user.Id)
-    console.log(result)
-    if(result){
-
+    const resultverif = await Accounts_API.verifycode(code,user.Id)
+    if(resultverif){
+      const val = {
+        Email: resultverif.email,
+        Password: resultverif.password,
+      };
+  
+      const result = await Accounts_API.Login(val);
+      
+      await Accounts_API.SaveToken(result.Access_token);
+      await Accounts_API.SaveUser(result.User);
+      showPosts(true);
     }
 
   });
