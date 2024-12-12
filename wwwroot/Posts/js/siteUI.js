@@ -986,14 +986,14 @@ function renderInscription(user = null) {
     } else showError("Une erreur est survenue! ", Accounts_API.currentHttpError);
   });
 }
-function RenderConnexions() {
+function RenderConnexions(txt=null) {
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
 
         <form class="form" id="userForm">
         <div class="login-container">
-            <h1>Connexion</h1>
+            <h1 id="idconec">Connexion</h1>
             <form action="/login" method="post">
             <div class="form-group">
                 <label for="email">Adresse e-mail</label>
@@ -1024,6 +1024,10 @@ function RenderConnexions() {
         </form>
 
     `);
+    if(txt){
+      const titre = document.getElementById("idconec");
+      titre.innerText = txt;
+    }
   initFormValidation();
   $("#userForm").on("submit", async function (event) {
     event.preventDefault(); // Empêche la soumission normale du formulaire
