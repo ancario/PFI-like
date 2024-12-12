@@ -340,6 +340,8 @@ function renderPost(post, loggedUser) {
   if (like && like.ListOfUserLike) {
     nombreLike = like.ListOfUserLike.length;
   }
+
+
   console.log(post.listename);
 
   // console.log( alluser  );
@@ -359,12 +361,12 @@ function renderPost(post, loggedUser) {
     user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
-
+let listName = post.listename.join("\n")
   const heartIconClass = getLikeIcon(user?.Id, like);
   if (hasHalfAccess ) {
     crudIcon += `
        <span class="" postId="${post.Id}" title="nombre de personne qui aime ce post">${nombreLike}</span>
-        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="Aimer ce post"></span>
+        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="${listName}"></span>
     `;
 }else {
     crudIcon = ``;
