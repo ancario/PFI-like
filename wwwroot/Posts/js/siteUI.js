@@ -1118,6 +1118,10 @@ function renderConfirmation(user) {
     const code = document.getElementById("code").value;
     event.preventDefault(); // Empêche la soumission normale du formulaire
     const result = await Accounts_API.verifycode(code,user.Id)
+    console.log(result)
+    if(result){
+
+    }
 
   });
 }
