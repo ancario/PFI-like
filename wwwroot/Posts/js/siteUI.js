@@ -77,8 +77,8 @@ function cleanSearchKeywords() {
 function gestionAddIcon() {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const hasFullAccess =
-    user?.Authorizations?.readAccess === 2 &&
-    user?.Authorizations?.writeAccess === 2;
+    user?.Authorizations?.readAccess >= 2 &&
+    user?.Authorizations?.writeAccess >= 2;
   if (!hasFullAccess) {
     $("#createPost").hide();
   }
@@ -339,6 +339,8 @@ function renderPost(post, loggedUser) {
   if (like && like.ListOfUserLike) {
     nombreLike = like.ListOfUserLike.length;
   }
+
+
   console.log(post.listename);
 
   // console.log( alluser  );
@@ -351,24 +353,29 @@ function renderPost(post, loggedUser) {
   //   console.log(likedUserNames);
 
   const hasFullAccess =
-    user?.Authorizations?.readAccess === 2 &&
-    user?.Authorizations?.writeAccess === 2;
+    user?.Authorizations?.readAccess >= 2 &&
+    user?.Authorizations?.writeAccess >= 2;
     const hasHalfAccess =
     user?.Authorizations?.readAccess >=1 &&
     user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
+  let listName = "personne n'aime ce commentaire pour l'instant l'aimez vous?";
+  console.log(post.listename)
+  if(post.listename){
+    listName = post.listename.join("\n");
+  }
 
   const heartIconClass = getLikeIcon(user?.Id, like);
   if (hasHalfAccess ) {
     crudIcon += `
        <span class="" postId="${post.Id}" title="nombre de personne qui aime ce post">${nombreLike}</span>
-        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="Aimer ce post"></span>
+        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="${listName}"></span>
     `;
 }else {
     crudIcon = ``;
   }
- if(hasFullAccess||true){
+ if(hasFullAccess){
    crudIcon +=
   `
   <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
@@ -376,8 +383,18 @@ function renderPost(post, loggedUser) {
   `;
 
  }
-   
-  
+   console.log(post.userOwners );
+   console.log(post.test );
+   let addOwner= ``;
+  if(post.userOwners){
+    let photo = "http://localhost:5000/assetsRepository/" +post.userOwners.Avatar;
+    addOwner+=`
+            <div class="avatar-container">
+                <div class="avatar" style="background-image:url('${photo}');"></div>
+                <span>${post.userOwners.Name}</span>
+            </div>
+    `
+  }
   
   return $(`
         <div class="post" id="${post.Id}">
@@ -387,6 +404,7 @@ function renderPost(post, loggedUser) {
             </div>
             <div class="postTitle"> ${post.Title} </div>
             <img class="postImage" src='${post.Image}'/>
+          ${addOwner}
             <div class="postDate"> ${date} </div>
             <div postId="${post.Id}" class="postTextContainer hideExtra">
                 <div class="postText" >${post.Text}</div>
@@ -756,6 +774,7 @@ function newUser() {
   return user;
 }
 function renderPostForm(post = null) {
+  const user = JSON.parse(sessionStorage.getItem("user"));
   let create = post == null;
   if (create) post = newPost();
   $("#form").show();
@@ -820,7 +839,9 @@ function renderPostForm(post = null) {
   });
   $("#postForm").on("submit", async function (event) {
     event.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem("user"));
     let post = getFormData($("#postForm"));
+    post.IdUserWhoPost = user.Id;
     if (post.Category != selectedCategory) selectedCategory = "";
     if (create || !("keepDate" in post)) post.Date = Local_to_UTC(Date.now());
     delete post.keepDate;
