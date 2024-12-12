@@ -1053,7 +1053,7 @@ function RenderConnexions() {
         showPosts(true);
       }
       else{
-        renderConfirmation(result.User);
+        renderConfirmation(result.User,password);
       }
     } else {
       console.error("Erreur de connexion :", Accounts_API.currentHttpError);
@@ -1087,7 +1087,7 @@ function RenderDeconnexions() {
     showPosts();
   });
 }
-function renderConfirmation(user) {
+function renderConfirmation(user,password) {
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
@@ -1118,14 +1118,15 @@ function renderConfirmation(user) {
     const code = document.getElementById("code").value;
     event.preventDefault(); // Empêche la soumission normale du formulaire
     const resultverif = await Accounts_API.verifycode(code,user.Id)
+    console.log(resultverif)
     if(resultverif){
       const val = {
-        Email: resultverif.email,
-        Password: resultverif.password,
+        Email: resultverif.Email,
+        Password: password,
       };
-  
+      console.log(val)
       const result = await Accounts_API.Login(val);
-      
+
       await Accounts_API.SaveToken(result.Access_token);
       await Accounts_API.SaveUser(result.User);
       showPosts(true);
