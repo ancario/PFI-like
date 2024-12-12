@@ -95,6 +95,7 @@ function hideSearchIcon() {
   $("#showSearch").hide();
   $("#searchKeys").hide();
 }
+/////////////////////////////////////////////////////////////////////
 function toogleShowKeywords() {
   showKeywords = !showKeywords;
   if (showKeywords) {
@@ -122,12 +123,14 @@ function intialView() {
   showSearchIcon();
   gestionAddIcon();
 }
+/////////////////////////////////////////////////////////////////////
 async function showPosts(reset = false) {
   intialView();
   $("#viewTitle").text("Fil de nouvelles");
   periodic_Refresh_paused = false;
   await postsPanel.show(reset);
 }
+/////////////////////////////////////////////////////////////////////
 function hidePosts() {
   postsPanel.hide();
   hideSearchIcon();
@@ -135,12 +138,14 @@ function hidePosts() {
   $("#menu").hide();
   periodic_Refresh_paused = true;
 }
+/////////////////////////////////////////////////////////////////////
 function showForm() {
   hidePosts();
   $("#form").show();
   $("#commit").show();
   $("#abort").show();
 }
+/////////////////////////////////////////////////////////////////////
 function showError(message, details = "") {
   hidePosts();
   $("#form").hide();
@@ -155,22 +160,38 @@ function showError(message, details = "") {
   $("#errorContainer").append($(`<div>${message}</div>`));
   $("#errorContainer").append($(`<div>${details}</div>`));
 }
-
+/////////////////////////////////////////////////////////////////////
 function showCreatePostForm() {
   showForm();
   $("#viewTitle").text("Ajout de nouvelle");
   renderPostForm();
 }
+/////////////////////////////////////////////////////////////////////
 function showEditPostForm(id) {
   showForm();
   $("#viewTitle").text("Modification");
   renderEditPostForm(id);
 }
+/////////////////////////////////////////////////////////////////////
 function showDeletePostForm(id) {
   showForm();
   $("#viewTitle").text("Retrait");
   renderDeletePostForm(id);
 }
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+function handleLikePost(idPost) {
+  const user = JSON.parse(sessionStorage.getItem("user")); 
+  const userId = user?.Id
+  Likes_API.ILikeThat(idPost,userId);
+console.log("allo log like")
+}
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+
 function showAbout() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -179,7 +200,7 @@ function showAbout() {
   $("#viewTitle").text("À propos...");
   $("#aboutContainer").show();
 }
-
+/////////////////////////////////////////////////////////////////////
 function showDeconnexion() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -187,6 +208,7 @@ function showDeconnexion() {
   $("#abort").show();
   RenderDeconnexions();
 }
+/////////////////////////////////////////////////////////////////////
 function showConnexion() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -195,6 +217,7 @@ function showConnexion() {
   $("#viewTitle").text("Connexion");
   RenderConnexions();
 }
+/////////////////////////////////////////////////////////////////////
 function showGestionUsager() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -202,6 +225,7 @@ function showGestionUsager() {
   $("#abort").show();
   $("#viewTitle").text("GestionUsager");
 }
+/////////////////////////////////////////////////////////////////////
 function showModificationProfil() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -211,7 +235,7 @@ function showModificationProfil() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   renderInscription(user);
 }
-
+/////////////////////////////////////////////////////////////////////
 function showInscription() {
   hidePosts();
   $("#hiddenIcon").show();
@@ -248,6 +272,7 @@ function start_Periodic_Refresh() {
     }
   }, periodicRefreshPeriod * 1000);
 }
+/////////////////////////////////////////////////////////////////////
 async function renderPosts(queryString) {
   let endOfData = false;
   queryString += "&sort=date,desc";
@@ -278,24 +303,63 @@ async function renderPosts(queryString) {
   removeWaitingGif();
   return endOfData;
 }
+function getLikeIcon(userId, like) {
+  // Si l'objet like est vide ou non défini, retourner un cœur par défaut (cœur vide)
+  if (!like) {
+    return "fa-regular fa-heart"; // Cœur vide par défaut
+  }
 
+  // Vérifier si la liste des utilisateurs ayant aimé le post est vide
+  if (!like.ListOfUserLike || like.ListOfUserLike.length === 0) {
+    // Si la liste est vide, retourner un cœur vide
+    return "fa-regular fa-heart"; // Cœur vide
+  }
+
+  // Vérifier si l'ID de l'utilisateur est dans la liste des likes
+  const isUserLiked = like.ListOfUserLike.includes(userId);
+
+  // Retourner l'icône appropriée : cœur plein ou cœur vide
+  return isUserLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"; // Cœur plein si l'utilisateur a aimé, sinon cœur vide
+}
+/////////////////////////////////////////////////////////////////////
 function renderPost(post, loggedUser) {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
+  const like = Likes_API.FindLike(post.Id)[0];
+  let nombreLike = 0;
+  if (like && like.ListOfUserLike) {
+    nombreLike = like.ListOfUserLike.length;
+  }
+
+
+
   const hasFullAccess =
     user?.Authorizations?.readAccess === 2 &&
     user?.Authorizations?.writeAccess === 2;
+    const hasHalfAccess =
+    user?.Authorizations?.readAccess >=1 &&
+    user?.Authorizations?.writeAccess >=1 ;
   let date = convertToFrenchDate(UTC_To_Local(post.Date));
   let crudIcon = ``;
-
-  if (hasFullAccess) {
-    crudIcon = `
-    <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
-    <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
+  const heartIconClass = getLikeIcon(user.Id, like);
+  if (hasHalfAccess ) {
+    crudIcon += `
+       <span class="" postId="${post.Id}" title="nombre de personne qui aime ce post">${nombreLike}</span>
+        <span class="likeCmd cmdIconSmall ${heartIconClass}" postId="${post.Id}" title="Aimer ce post"></span>
     `;
-  } else {
+}else {
     crudIcon = ``;
   }
+ if(hasFullAccess||true){
+   crudIcon +=
+  `
+  <span class="editCmd cmdIconSmall fa fa-pencil" postId="${post.Id}" title="Modifier nouvelle"></span>
+  <span class="deleteCmd cmdIconSmall fa fa-trash" postId="${post.Id}" title="Effacer nouvelle"></span>
+  `;
 
+ }
+   
+  
+  
   return $(`
         <div class="post" id="${post.Id}">
             <div class="postHeader">
@@ -315,6 +379,7 @@ function renderPost(post, loggedUser) {
         </div>
     `);
 }
+/////////////////////////////////////////////////////////////////////
 async function compileCategories() {
   categories = [];
   let response = await Posts_API.GetQuery("?fields=category&sort=category");
@@ -329,6 +394,7 @@ async function compileCategories() {
     }
   }
 }
+/////////////////////////////////////////////////////////////////////
 function updateDropDownMenu() {
   const user = JSON.parse(sessionStorage.getItem("user")); // Récupérer les données utilisateur
   const token = sessionStorage.getItem("token"); // Vérifier si le token existe
@@ -478,7 +544,7 @@ function updateDropDownMenu() {
     updateDropDownMenu();
   });
 }
-
+/////////////////////////////////////////////////////////////////////
 function attach_Posts_UI_Events_Callback() {
   linefeeds_to_Html_br(".postText");
   // attach icon command click event callback
@@ -489,6 +555,11 @@ function attach_Posts_UI_Events_Callback() {
   $(".deleteCmd").off();
   $(".deleteCmd").on("click", function () {
     showDeletePostForm($(this).attr("postId"));
+  });
+  $(".likeCmd").off();
+  $(".likeCmd").on("click", function () {
+    const postId = $(this).attr("postId");
+    handleLikePost(postId); // Appelle une fonction pour gérer le like
   });
   $(".moreText").off();
   $(".moreText").click(function () {
@@ -515,6 +586,7 @@ function attach_Posts_UI_Events_Callback() {
     );
   });
 }
+/////////////////////////////////////////////////////////////////////
 function addWaitingGif() {
   clearTimeout(waiting);
   waiting = setTimeout(() => {
@@ -525,6 +597,7 @@ function addWaitingGif() {
     );
   }, waitingGifTrigger);
 }
+/////////////////////////////////////////////////////////////////////
 function removeWaitingGif() {
   clearTimeout(waiting);
   $("#waitingGif").remove();
@@ -540,6 +613,7 @@ function linefeeds_to_Html_br(selector) {
     postText.html(str.replace(regex, "<br>"));
   });
 }
+/////////////////////////////////////////////////////////////////////
 function highlight(text, elem) {
   text = text.trim();
   if (text.length >= minKeywordLenth) {
@@ -568,6 +642,7 @@ function highlight(text, elem) {
     elem.innerHTML = innerHTML;
   }
 }
+/////////////////////////////////////////////////////////////////////
 function highlightKeywords() {
   if (showKeywords) {
     let keywords = $("#searchKeys").val().split(" ");
@@ -842,13 +917,7 @@ function renderInscription(user = null) {
   const confirmEmail = document.getElementById("ConfirmEmail");
   const pass = document.getElementById("Password");
   const confirmpass = document.getElementById("ConfirmPassword");
-  $("#commit").click(function () {
-    $("#commit").off();
-    return $("#saveUser").trigger("click");
-  });
-  $("#cancel").on("click", async function () {
-    await showPosts();
-  });
+
   $("#userForm").on("submit", async function (event) {
     event.preventDefault();
     if (email.value !== confirmEmail.value) {

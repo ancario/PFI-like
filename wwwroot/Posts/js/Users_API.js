@@ -15,29 +15,29 @@ class Users_API {
         this.error = true;
     }
     static async HEAD() {
-        Users_API.initHttpState();
+        Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
                 url: this.API_URL(),
                 type: 'HEAD',
                 contentType: 'text/plain',
                 complete: data => { resolve(data.getResponseHeader('ETag')); },
-                error: (xhr) => { Users_API.setHttpErrorState(xhr); resolve(null); }
+                error: (xhr) => { Likes_API.setHttpErrorState(xhr); resolve(null); }
             });
         });
     }
     static async Get(id = null) {
-        Users_API.initHttpState();
+        Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
                 url: this.API_URL() + (id != null ? "/" + id : ""),
                 complete: data => { resolve({ ETag: data.getResponseHeader('ETag'), data: data.responseJSON }); },
-                error: (xhr) => { Users_API.setHttpErrorState(xhr); resolve(null); }
+                error: (xhr) => { Likes_API.setHttpErrorState(xhr); resolve(null); }
             });
         });
     }
     static async GetQuery(queryString = "") {
-        Users_API.initHttpState();
+        Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
                 url: this.API_URL() + queryString,
@@ -45,13 +45,13 @@ class Users_API {
                     resolve({ ETag: data.getResponseHeader('ETag'), data: data.responseJSON });
                 },
                 error: (xhr) => {
-                    Users_API.setHttpErrorState(xhr); resolve(null);
+                    Likes_API.setHttpErrorState(xhr); resolve(null);
                 }
             });
         });
     }
     static async Save(data, create = true) {
-        Users_API.initHttpState();
+        Likes_API.initHttpState();
         return new Promise(resolve => {
             $.ajax({
                 url: create ? this.API_URL() : this.API_URL() + "/" + data.Id,
@@ -59,7 +59,7 @@ class Users_API {
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: (data) => { resolve(data); },
-                error: (xhr) => { Users_API.setHttpErrorState(xhr); resolve(null); }
+                error: (xhr) => { Likes_API.setHttpErrorState(xhr); resolve(null); }
             });
         });
     }
@@ -69,11 +69,11 @@ class Users_API {
                 url: this.API_URL() + "/" + id,
                 type: "DELETE",
                 complete: () => {
-                    Users_API.initHttpState();
+                    Likes_API.initHttpState();
                     resolve(true);
                 },
                 error: (xhr) => {
-                    Users_API.setHttpErrorState(xhr); resolve(null);
+                    Likes_API.setHttpErrorState(xhr); resolve(null);
                 }
             });
         });
