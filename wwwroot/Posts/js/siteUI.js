@@ -1026,7 +1026,7 @@ function RenderConnexions() {
       await Accounts_API.SaveUser(result.User);
       console.log(result.User.VerifyCode)
       updateDropDownMenu();
-      if(result.User.VerifyCode=="verified"||result.User.VerifyCode=="verified"){
+      if(result.User.VerifyCode=="verified"){
         showPosts(true);
       }
       else{
@@ -1087,24 +1087,14 @@ function renderConfirmation(user) {
 
       `);
   initFormValidation();
-  const code = document.getElementById("code");
   $("#cancel").on("click", async function () {
     await showPosts();
   });
 
   $("#userForm").on("submit", async function (event) {
+    const code = document.getElementById("code").value;
     event.preventDefault(); // Empêche la soumission normale du formulaire
-    console.log(user.VerifyCode)
-
-    // const result = await Accounts_API.Login(val);
-    if (code == user.VerifyCode) {
-      user.VerifyCode = "verified";
-      updateDropDownMenu();
-      showPosts(true);
-    }
-    else{
-      alert("erreur code non valide")
-    }
+    const result = await Accounts_API.verifycode(code,user.Id)
 
   });
 }
