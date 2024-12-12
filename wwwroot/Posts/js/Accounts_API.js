@@ -244,6 +244,17 @@ static async RemoveToken() {
     });
 }
 
-
-
+// Suppression d'un token dans sessionStorage
+static async t() {
+    return new Promise((resolve) => {
+        if (sessionStorage.getItem(this.TOKEN_KEY)) {
+            sessionStorage.removeItem(this.TOKEN_KEY);
+            console.log("Token supprimé.");
+            resolve(true);
+        } else {
+            console.warn("Aucun token à supprimer.");
+            resolve(false);
+        }
+    });
+}
 }

@@ -264,7 +264,6 @@ function start_Periodic_Refresh() {
       let postsCount = parseInt(etag.split("-")[0]);
       if (currentETag != etag) {
         if (postsCount != currentPostsCount) {
-          console.log("postsCount", postsCount);
           currentPostsCount = postsCount;
           $("#reloadPosts").removeClass("white");
         } else await showPosts();
@@ -397,7 +396,7 @@ let listName = post.listename.join("\n")
             <div class="postfooter">
                 <span postId="${post.Id}" class="moreText cmdIconXSmall fa fa-angle-double-down" title="Afficher la suite"></span>
                 <span postId="${post.Id}" class="lessText cmdIconXSmall fa fa-angle-double-up" title="Réduire..."></span>
-            </div>         
+            </div>
         </div>
     `);
 }
@@ -422,7 +421,7 @@ function updateDropDownMenu() {
   const token = sessionStorage.getItem("token"); // Vérifier si le token existe
   const userId = user?.Id ; // Utiliser l'email comme identifiant unique
   const userName = user?.Name || "Utilisateur"; // Utiliser le nom ou une valeur par défaut
-  const avatarUrl = user?.Avatar 
+  const avatarUrl = user?.Avatar
 
   let DDMenu = $("#DDMenu");
   let selectClass = selectedCategory === "" ? "fa-check" : "fa-fw";
@@ -432,7 +431,7 @@ function updateDropDownMenu() {
   DDMenu.empty();
 
   // Affichage de l'avatar et du nom de l'utilisateur
- 
+
   if (userId && token) {
     DDMenu.append(
       $(`
@@ -457,7 +456,7 @@ function updateDropDownMenu() {
   if (hasFullAccess) {
     DDMenu.append($(`<div class="dropdown-divider"></div>`));
     DDMenu.append(
-      $(` 
+      $(`
         <div class="dropdown-item menuItemLayout" id="gestionUsagerCmd">
            <i class="menuIcon fa fa-users-cog mx-2"></i> Gestion des usagers
         </div>
@@ -768,7 +767,7 @@ function renderPostForm(post = null) {
             <input type="hidden" name="Id" value="${post.Id}"/>
              <input type="hidden" name="Date" value="${post.Date}"/>
             <label for="Category" class="form-label">Catégorie </label>
-            <input 
+            <input
                 class="form-control"
                 name="Category"
                 id="Category"
@@ -777,10 +776,10 @@ function renderPostForm(post = null) {
                 value="${post.Category}"
             />
             <label for="Title" class="form-label">Titre </label>
-            <input 
+            <input
                 class="form-control"
-                name="Title" 
-                id="Title" 
+                name="Title"
+                id="Title"
                 placeholder="Titre"
                 required
                 RequireMessage="Veuillez entrer un titre"
@@ -788,20 +787,20 @@ function renderPostForm(post = null) {
                 value="${post.Title}"
             />
             <label for="Url" class="form-label">Texte</label>
-             <textarea class="form-control" 
-                          name="Text" 
+             <textarea class="form-control"
+                          name="Text"
                           id="Text"
-                          placeholder="Texte" 
+                          placeholder="Texte"
                           rows="9"
-                          required 
+                          required
                           RequireMessage = 'Veuillez entrer une Description'>${post.Text}</textarea>
 
             <label class="form-label">Image </label>
             <div class='imageUploaderContainer'>
-                <div class='imageUploader' 
-                     newImage='${create}' 
-                     controlId='Image' 
-                     imageSrc='${post.Image}' 
+                <div class='imageUploader'
+                     newImage='${create}'
+                     controlId='Image'
+                     imageSrc='${post.Image}'
                      waitingImage="Loading_icon.gif">
                 </div>
             </div>
@@ -864,10 +863,10 @@ function renderInscription(user = null) {
         <input type="hidden" name="Created" value="${user.Created}"/>
         <input type="hidden" name="VerifyCode" value="${user.VerifyCode}"/>
         <label for="Name" class="form-label">nom </label>
-            <input 
+            <input
                 class="form-control"
-                name="Name" 
-                id="Name" 
+                name="Name"
+                id="Name"
                 placeholder="nom"
                 required
                 RequireMessage="Veuillez entrer un nom"
@@ -876,20 +875,20 @@ function renderInscription(user = null) {
             />
             <div>
             <label for="Email" class="form-label">Email </label>
-            <input 
+            <input
                 class="form-control"
-                name="Email" 
-                id="Email" 
+                name="Email"
+                id="Email"
                 placeholder="couriel"
                 required
                 RequireMessage="Veuillez entrer un couriel"
                 InvalidMessage="Le couriel comporte un caractère illégal"
                 value="${user.Email}"
             />
-            <input 
+            <input
                 class="form-control"
-                name="MatchedInput" 
-                id="ConfirmEmail" 
+                name="MatchedInput"
+                id="ConfirmEmail"
                 placeholder="verification"
                 required
                 value="${user.Email}"
@@ -900,19 +899,19 @@ function renderInscription(user = null) {
 
               <div>
             <label for="Password" class="form-label">mot de passe </label>
-            <input 
+            <input
                 class="form-control"
-                name="Password" 
-                id="Password" 
+                name="Password"
+                id="Password"
                 placeholder="mot de pass"
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
                 value=""
             />
-            <input 
+            <input
                 class="form-control"
-                name="Password" 
-                id="ConfirmPassword" 
+                name="Password"
+                id="ConfirmPassword"
                 placeholder="verification"
                 RequireMessage="Veuillez entrer un mot de pass"
                 InvalidMessage="Le mot de pass comporte un caractère illégal"
@@ -920,13 +919,13 @@ function renderInscription(user = null) {
             />
             </div>
 
-           
+
             <label class="form-label">Avatar </label>
             <div class='imageUploaderContainer'>
-                <div class='imageUploader' 
-                     newImage='${create}' 
-                     controlId='Avatar' 
-                     imageSrc='${user.Avatar}' 
+                <div class='imageUploader'
+                     newImage='${create}'
+                     controlId='Avatar'
+                     imageSrc='${user.Avatar}'
                      waitingImage="Loading_icon.gif">
                 </div>
             </div>
@@ -952,11 +951,11 @@ function renderInscription(user = null) {
     }
 
     let user = getFormData($("#userForm"));
-   
-    
+
+
 
     if (!create) {
-   
+
 
       await Accounts_API.Modify(user);
     } else {
@@ -972,17 +971,17 @@ function RenderConnexions() {
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
-       
+
         <form class="form" id="userForm">
         <div class="login-container">
             <h1>Connexion</h1>
             <form action="/login" method="post">
             <div class="form-group">
                 <label for="email">Adresse e-mail</label>
-                 <input 
+                 <input
                 class="form-control"
-                name="Email" 
-                id="Email" 
+                name="Email"
+                id="Email"
                 placeholder="Email"
                 required
                 RequireMessage="Veuillez entrer votre Email"
@@ -991,10 +990,10 @@ function RenderConnexions() {
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input 
+                <input
                 class="form-control"
-                name="Password" 
-                id="Password" 
+                name="Password"
+                id="Password"
                 placeholder="mot de pass"
                 required
                 RequireMessage="Veuillez entrer un mot de pass"
@@ -1027,8 +1026,14 @@ function RenderConnexions() {
     if (result) {
       await Accounts_API.SaveToken(result.Access_token);
       await Accounts_API.SaveUser(result.User);
+      console.log(result.User.VerifyCode)
       updateDropDownMenu();
-      showPosts(true);
+      if(result.User.VerifyCode=="verified"||result.User.VerifyCode=="verified"){
+        showPosts(true);
+      }
+      else{
+        renderConfirmation(result.User);
+      }
     } else {
       console.error("Erreur de connexion :", Accounts_API.currentHttpError);
       alert("Erreur de connexion : " + Accounts_API.currentHttpError);
@@ -1039,14 +1044,14 @@ function RenderDeconnexions() {
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
-         
+
           <form class="form" id="userForm">
           <div class="login-container">
                 <h3>voulez-vous vraiment vous deconecter</h3>
               <button type="submit" class="btn" id >oui</button>
           </div>
           </form>
-  
+
       `);
   initFormValidation();
   $("#cancel").on("click", async function () {
@@ -1065,14 +1070,14 @@ function renderConfirmation(user) {
   $("#form").show();
   $("#form").empty();
   $("#form").append(`
-         
+
           <form class="form" id="userForm">
           <div class="login-container">
                 <h3>entrer le code de verification</h3>
-               <input 
+               <input
                 class="form-control"
-                name="code" 
-                id="code" 
+                name="code"
+                id="code"
                 placeholder="code"
                 required
                 RequireMessage="Veuillez entrer un code"
@@ -1081,7 +1086,7 @@ function renderConfirmation(user) {
               <button type="submit" class="btn" id >confirmer</button>
           </div>
           </form>
-  
+
       `);
   initFormValidation();
   const code = document.getElementById("code");
@@ -1091,11 +1096,17 @@ function renderConfirmation(user) {
 
   $("#userForm").on("submit", async function (event) {
     event.preventDefault(); // Empêche la soumission normale du formulaire
+    console.log(user.VerifyCode)
 
+    // const result = await Accounts_API.Login(val);
     if (code == user.VerifyCode) {
       user.VerifyCode = "verified";
+      updateDropDownMenu();
+      showPosts(true);
     }
-    updateDropDownMenu();
-    showPosts(true);
+    else{
+      alert("erreur code non valide")
+    }
+
   });
 }
